@@ -5,8 +5,6 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignOfSilenceVR", "SignOfSilenceVR.csproj", "{37F6CA86-DB85-4823-85C4-C2149D90663A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRPatcher", "VRPatcher\VRPatcher.csproj", "{CBE08B7D-D642-4E90-9220-2C3EF95197F8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{37F6CA86-DB85-4823-85C4-C2149D90663A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37F6CA86-DB85-4823-85C4-C2149D90663A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37F6CA86-DB85-4823-85C4-C2149D90663A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBE08B7D-D642-4E90-9220-2C3EF95197F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBE08B7D-D642-4E90-9220-2C3EF95197F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBE08B7D-D642-4E90-9220-2C3EF95197F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBE08B7D-D642-4E90-9220-2C3EF95197F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

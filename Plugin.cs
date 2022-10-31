@@ -1,4 +1,6 @@
-﻿using BepInEx;
+﻿using System.Reflection;
+using BepInEx;
+using HarmonyLib;
 using Valve.VR;
 
 namespace SignOfSilenceVR
@@ -14,7 +16,9 @@ namespace SignOfSilenceVR
         {
             // Plugin startup logic
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             InitSteamVR();
+            this.gameObject.AddComponent<UIPatches>();
         }
 
         private static void InitSteamVR()

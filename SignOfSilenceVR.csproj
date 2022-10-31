@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <AssemblyName>SignOfSilenceVR</AssemblyName>
@@ -23,12 +23,18 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="VRPatcher\VRPatcher.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\Sign of Silence\Sign Of Silence_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SteamVR">
       <HintPath>libs\SteamVR.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\Sign of Silence\Sign Of Silence_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call D:\bHaptics\SignOfSilence\dev\SignOfSilenceVR\bin\Debug\copy.bat" />
+  </Target>
 </Project>
