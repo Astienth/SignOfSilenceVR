@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3432454004
+CRC: 1835773964
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5e31dc8668c621a8a6aa63157894c894
+    Hash: c24c79075ad58975669deec511ab4a5b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 67e6358a6c833a88413edc2c3e370151
@@ -40,6 +40,6 @@ ClassTypes:
 - Class: 137
   Script: {instanceID: 0}
 Assets:
-- Assets/SteamVR/Prefabs/vr_glove_right.prefab
-- Assets/SteamVR/Prefabs/vr_glove_left.prefab
+- Assets/SteamVR/Prefabs/vr_glove_right_model_slim.prefab
+- Assets/SteamVR/Prefabs/vr_glove_left_model_slim.prefab
 Dependencies: []

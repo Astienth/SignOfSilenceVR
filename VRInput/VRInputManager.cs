@@ -13,7 +13,6 @@ namespace SignOfSilenceVR
         static VRInputManager()
         {
             SetUpListeners();
-            CameraManager.SpawnHands();
         }
 
         public static void SetUpListeners()
@@ -23,6 +22,7 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.grabright.AddOnStateUpListener(GrabRightUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnStateDownListener(GrabLeftDown, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.confirm.AddOnStateUpListener(Confirm, SteamVR_Input_Sources.Any);
 
             // VECTOR 2Ds
             SteamVR_Actions._default.move.AddOnUpdateListener(OnLeftJoystickUpdate, SteamVR_Input_Sources.Any);
@@ -31,6 +31,11 @@ namespace SignOfSilenceVR
             // POSES
             SteamVR_Actions._default.RightHandPose.AddOnUpdateListener(SteamVR_Input_Sources.Any, UpdateRightHand);
             SteamVR_Actions._default.LeftHandPose.AddOnUpdateListener(SteamVR_Input_Sources.Any, UpdateLeftHand);
+        }
+
+        public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        {
+            CameraManager.SpawnHands();
         }
 
         public static void GrabRightDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -69,8 +74,6 @@ namespace SignOfSilenceVR
             else
                 CameraManager.RightJoystick = Vector2.zero;
         }
-
-
         // POSES
         public static void UpdateRightHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
