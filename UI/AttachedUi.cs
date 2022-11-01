@@ -27,16 +27,20 @@ namespace SignOfSilenceVR
             }
         }
 
-        public void setPosition(Vector3 position)
+        public void setPosition(Vector3 position, Quaternion rotation)
         {
             transform.position = position;
+            transform.rotation = rotation;
         }
 
         private void UpdateTransform()
         {
-            transform.position = Donteco.MainCameraCached.Current.transform.position
-                + Donteco.MainCameraCached.Current.transform.forward;
-            transform.rotation = Donteco.MainCameraCached.Current.transform.rotation;
+            if (Donteco.MainCameraCached.Current)
+            {
+                transform.position = Donteco.MainCameraCached.Current.transform.position
+                    + Donteco.MainCameraCached.Current.transform.forward;
+                transform.rotation = Donteco.MainCameraCached.Current.transform.rotation;
+            }
         }
     }
 }

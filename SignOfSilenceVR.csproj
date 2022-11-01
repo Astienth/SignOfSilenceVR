@@ -29,9 +29,16 @@
     <Reference Include="SteamVR">
       <HintPath>libs\SteamVR.dll</HintPath>
     </Reference>
+    <Reference Include="SteamVR_Actions">
+      <HintPath>..\..\Sign of Silence\Sign Of Silence_Data\Managed\SteamVR_Actions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\Sign of Silence\Sign Of Silence_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Assets\AssetFiles\" />
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

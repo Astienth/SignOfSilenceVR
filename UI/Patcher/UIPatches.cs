@@ -30,15 +30,16 @@ namespace SignOfSilenceVR
                 if (canvas && !patchedCanvases.Contains(canvas))
                 {
                     AdjustScaler(canvas);
-                    ApplyWorldSpace(canvas);
+                    ApplyWorldSpace(canvas, 0.0015f);
                     canvas.GetComponent<AttachedUi>().followHead = false;
-                    canvas.GetComponent<AttachedUi>().setPosition(new Vector3(980,65,230));
+                    canvas.GetComponent<AttachedUi>()
+                        .setPosition(new Vector3(903.6f,64.2f,230.3f), Quaternion.Euler(0,69,0));
                     patchedCanvases.Add(canvas);
                 }
             }
         }
 
-        private void ApplyWorldSpace(Canvas canvas)
+        private void ApplyWorldSpace(Canvas canvas, float scale = 0.00045f)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace SignOfSilenceVR
                 {
                     return;
                 }
-                AttachedUi.Create<AttachedUi>(canvas, 0.001f);
+                AttachedUi.Create<AttachedUi>(canvas, scale);
                 return;
             }
             catch (Exception exception)
