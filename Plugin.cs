@@ -25,6 +25,7 @@ namespace SignOfSilenceVR
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             InitSteamVR();
             gameObject.AddComponent<UIPatches>();
+            gameObject.AddComponent<CameraPatches>();
         }
 
         private static void InitSteamVR()

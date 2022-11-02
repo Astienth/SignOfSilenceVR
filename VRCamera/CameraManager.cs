@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Valve.VR;
+using Donteco;
 
 namespace SignOfSilenceVR
 {
@@ -12,7 +13,7 @@ namespace SignOfSilenceVR
     {
         // VR Origin and body stuff
         public static Transform OriginalCameraParent = null;
-        public static GameObject VROrigin = new GameObject();
+        public static Camera VROrigin = null;
         public static GameObject LeftHand = null;
         public static GameObject RightHand = null;
 
@@ -29,19 +30,20 @@ namespace SignOfSilenceVR
         {
             if (!RightHand)
             {
-                RightHand = GameObject.Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
-                RightHand.transform.parent = VROrigin.transform;
+                try
+                {
+                    RightHand = GameObject.Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
+                    RightHand.transform.parent = VROrigin.transform;
+                } catch (Exception e)
+                {
+                    Logs.WriteError(e.Message);
+                }
             }
             if (!LeftHand)
             {
                 LeftHand = GameObject.Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
                 LeftHand.transform.parent = VROrigin.transform;
             }
-        }
-
-        public static void HandleFirstPersonCamera()
-        {
-            // attach to head ?
         }
     }
 
