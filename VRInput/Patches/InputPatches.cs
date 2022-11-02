@@ -19,15 +19,14 @@ namespace SignOfSilenceVR
             public static void PostFix()
             {
                 Donteco.GamepadManager.AcceptGamepad = true;
-                var gamepadConnected = Traverse.Create<Donteco.GamepadManager>().Method("MakeFoo").GetValue<Donteco.GamepadManager>();
-                Traverse.Create(gamepadConnected).Property("GamepadConnected").SetValue(true);
+                Traverse.Create<Donteco.GamepadManager>().Property("GamepadConnected").SetValue(true);
             }
         }
-
+        
         [HarmonyPatch]
         class DontShowGamepadNotif
         {
-            [HarmonyPostfix]
+            [HarmonyPrefix]
             [HarmonyPatch(typeof(Donteco.NotificationView), "Start")]
             public static bool PreFix()
             {
