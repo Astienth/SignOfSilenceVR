@@ -22,6 +22,11 @@ namespace SignOfSilenceVR
             "ExplorerCanvas"
         };
 
+        private void Start()
+        {
+            CreateUIColliders();
+        }
+
         private void FixedUpdate()
         {
             if (SceneManager.GetActiveScene().name == "menu")
@@ -36,6 +41,38 @@ namespace SignOfSilenceVR
                         .setPosition(new Vector3(903.6f,64.2f,230.3f), Quaternion.Euler(0,69,0));
                     patchedCanvases.Add(canvas);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Creates box colliders for all canvases that have at least one selectable item
+        /// </summary>
+        private void CreateUIColliders()
+        {
+            var selectables = Resources.FindObjectsOfTypeAll<Selectable>();
+            foreach (var selectable in selectables)
+            {
+                if (selectable.targetGraphic != null &&
+                   selectable.targetGraphic.canvas != null)
+                {
+                    SetupInteractableCanvasCollider(selectable.targetGraphic.canvas);
+                }
+            }
+        }
+
+        private void SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
+        {
+            if (proxy == null) proxy = canvas.gameObject;
+            var collider = proxy.GetComponent<BoxCollider>();
+            if (collider == null)
+            {
+                var rectTransform = canvas.GetComponent<RectTransform>();
+                var thickness = 0.1f;
+                collider = proxy.gameObject.AddComponent<BoxCollider>();
+                collider.size = rectTransform.sizeDelta;
+                collider.center = new Vector3(0, 0, thickness * 0.5f);
+                proxy.layer = LayerMask.NameToLayer("UI");
+                canvas.worldCamera = Camera.main;
             }
         }
 

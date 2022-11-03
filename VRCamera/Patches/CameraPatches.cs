@@ -8,16 +8,21 @@ namespace SignOfSilenceVR
     {
         private void Update()
         {
-            // attach to head ?
             GameObject localPlayer = this.gameObject.FindLocalPlayer();
+            //player doesn't exist
             if ((UnityEngine.Object)localPlayer == (UnityEngine.Object)null)
             {
-                Logs.WriteWarning("OBJECT NULL");
-                CameraManager.VROrigin = this.GetComponent<Camera>();
+                CameraManager.LocalPlayer = null;
                 return;
             }
-            Camera componentInChildren = localPlayer.GetComponentInChildren<Camera>();
-            CameraManager.VROrigin = componentInChildren;
+            //player exists
+            //Logs.WriteWarning("PLAYER EXISTS");
+            var netID = this.transform.root.GetComponentCached<NetIdentity>();
+            if (!netID || (netID && netID.IsLocalPlayer))
+            {
+                CameraManager.LocalPlayer = localPlayer;
+                CameraManager.HandleFirstPersonCamera();
+            }
         }
     }
 }

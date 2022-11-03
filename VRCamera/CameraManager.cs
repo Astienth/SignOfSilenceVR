@@ -13,7 +13,7 @@ namespace SignOfSilenceVR
     {
         // VR Origin and body stuff
         public static Transform OriginalCameraParent = null;
-        public static Camera VROrigin = null;
+        public static GameObject LocalPlayer = null;
         public static GameObject LeftHand = null;
         public static GameObject RightHand = null;
 
@@ -26,23 +26,37 @@ namespace SignOfSilenceVR
         // FIrst person camera stuff
         public static float Turnrate = 3f;
 
+        public static void HandleFirstPersonCamera()
+        {
+            if (LocalPlayer != null)
+            {
+                if (LocalPlayer.GetComponent<PlayerMovementController>().IsCrouching)
+                {
+                    LocalPlayer.transform.Find("HEAD_HANDS").transform.localPosition = new Vector3(0, 0.4f, 0);
+                }
+                else
+                {
+                    LocalPlayer.transform.Find("HEAD_HANDS").transform.localPosition = new Vector3(0, 0.8f, 0);
+                }
+
+                //ROTATION
+                //Vector3 RotationEulers = new Vector3(0, Turnrate * RightJoystick.x, 0);
+                //VROrigin.transform.Rotate(RotationEulers);
+            }
+        }
+
         public static void SpawnHands()
         {
             if (!RightHand)
             {
-                try
-                {
-                    RightHand = GameObject.Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
-                    RightHand.transform.parent = VROrigin.transform;
-                } catch (Exception e)
-                {
-                    Logs.WriteError(e.Message);
-                }
+                RightHand = GameObject.Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
+                RightHand.transform.parent = LocalPlayer.transform;
             }
+            
             if (!LeftHand)
             {
                 LeftHand = GameObject.Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
-                LeftHand.transform.parent = VROrigin.transform;
+                LeftHand.transform.parent = LocalPlayer.transform;
             }
         }
     }
