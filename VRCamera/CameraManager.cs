@@ -86,6 +86,8 @@ namespace SignOfSilenceVR
                 cameraParent.localRotation = Quaternion.identity;
                 playerCamera.transform.parent = cameraParent;
                 resetPlayerHeadPosition();
+                //hide head
+                hideHead();
             }
         }
 
@@ -104,6 +106,28 @@ namespace SignOfSilenceVR
             {
                 playerHead = LocalPlayer.transform.Find("HEAD_HANDS").transform;
             }
+        }
+        private void hideHead()
+        {
+            var headBone = getHeadBone();
+            if (headBone != null)
+            {
+                headBone.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            }
+        }
+
+        private Transform getHeadBone()
+        {
+            if (LocalPlayer == null)
+            {
+                return null;
+            }
+            var animator = LocalPlayer.GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                return null;
+            }
+            return animator.GetBoneTransform(HumanBodyBones.Head);
         }
 
         private Camera findOriginCamera()
