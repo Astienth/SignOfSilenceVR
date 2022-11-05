@@ -9,13 +9,16 @@ using Donteco;
 
 namespace SignOfSilenceVR
 {
-    public static class CameraManager
+    public class CameraManager : MonoBehaviour
     {
         // VR Origin and body stuff
-        public static Transform OriginalCameraParent = null;
         public static GameObject LocalPlayer = null;
         public static GameObject LeftHand = null;
         public static GameObject RightHand = null;
+        public static Camera playerCamera = null;
+        public static Transform cameraParent;
+        private static Transform playerHead = null;
+        private static Vector3 camLocPos = new Vector3(0,0.8f,0.2f);
 
         // VR Input stuff
         public static bool RightHandGrab = false;
@@ -26,22 +29,105 @@ namespace SignOfSilenceVR
         // FIrst person camera stuff
         public static float Turnrate = 3f;
 
-        public static void HandleFirstPersonCamera()
+        private void Start()
         {
-            if (LocalPlayer != null)
+            findPlayer();
+            if (LocalPlayer)
             {
-                if (LocalPlayer.GetComponent<PlayerMovementController>().IsCrouching)
-                {
-                    LocalPlayer.transform.Find("HEAD_HANDS").transform.localPosition = new Vector3(0, 0.4f, 0);
-                }
-                else
-                {
-                    LocalPlayer.transform.Find("HEAD_HANDS").transform.localPosition = new Vector3(0, 0.8f, 0);
-                }
+                setPlayerHead();
+                AdjustPlayerHeadPosition();
+                SetupCamera();
+            }
+        }
 
-                //ROTATION
-                //Vector3 RotationEulers = new Vector3(0, Turnrate * RightJoystick.x, 0);
-                //VROrigin.transform.Rotate(RotationEulers);
+        internal void Update()
+        {
+            if (LocalPlayer)
+            {
+                var cameraToHead = Vector3.ProjectOnPlane(LocalPlayer.transform.position
+                 - playerCamera.transform.position, LocalPlayer.transform.up);
+
+                if (cameraToHead.sqrMagnitude > 0.5f || cameraToHead.sqrMagnitude > 10f)
+                {
+                    MoveCameraToPlayerHead();
+                }
+            }
+            else
+            {
+                findPlayer();
+                if (LocalPlayer)
+                {
+                    setPlayerHead();
+                    AdjustPlayerHeadPosition();
+                    SetupCamera();
+                }
+            }
+        }
+
+        private static void AdjustPlayerHeadPosition()
+        {
+            //playerHead.localPosition = new Vector3(playerHead.localPosition.x, playerHead.localPosition.y, 0);
+        }
+
+        public void SetupCamera()
+        {
+            // Make an empty parent object for moving the camera around.
+            playerCamera = findOriginCamera();
+            if (playerCamera)
+            {
+                cameraParent = new GameObject("VrCameraParent").transform;
+                cameraParent.parent = LocalPlayer.transform;
+                cameraParent.position = playerHead.position;
+                cameraParent.rotation = playerHead.rotation;
+                cameraParent.localRotation = Quaternion.identity;
+                cameraParent.localPosition = Vector3.zero;
+                cameraParent.localPosition = camLocPos;
+                playerCamera.transform.parent = cameraParent;
+            }
+        }
+
+        public static void MoveCameraToPlayerHead()
+        {
+            cameraParent.position += cameraParent.position - cameraParent.Find("Head").transform.position;
+        }
+
+        private void setPlayerHead()
+        {
+            if (playerHead == null)
+            {
+                playerHead = LocalPlayer.transform.Find("HEAD_HANDS").transform;
+            }
+        }
+
+        private Camera findOriginCamera()
+        {
+            if (LocalPlayer)
+            {
+                return LocalPlayer.transform.Find("HEAD_HANDS")
+                    .transform.Find("CameraContainer")
+                    .transform.Find("Head").GetComponent<Camera>();
+            }
+            return null;
+        }
+
+        public void findPlayer()
+        {
+            if (LocalPlayer == null)
+            {
+                GameObject localPlayer = this.gameObject.FindLocalPlayer();
+                //player doesn't exist
+                if ((UnityEngine.Object)localPlayer == (UnityEngine.Object)null)
+                {
+                    LocalPlayer = null;
+                    return;
+                }
+                //player exists
+                //Logs.WriteWarning("PLAYER EXISTS");
+                var netID = this.transform.root.GetComponentCached<NetIdentity>();
+                if (!netID || (netID && netID.IsLocalPlayer))
+                {
+                    LocalPlayer = localPlayer;
+                }
             }
         }
 

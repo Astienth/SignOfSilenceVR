@@ -35,7 +35,7 @@ namespace SignOfSilenceVR
 
         public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.SpawnHands();
+            CameraManager.MoveCameraToPlayerHead();
         }
 
         public static void GrabRightDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)

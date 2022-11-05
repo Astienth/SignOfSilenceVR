@@ -25,7 +25,7 @@ namespace SignOfSilenceVR
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             InitSteamVR();
             //gameObject.AddComponent<UIPatches>();
-            gameObject.AddComponent<CameraPatches>();
+            gameObject.AddComponent<CameraManager>();
         }
 
         private static void InitSteamVR()
@@ -34,11 +34,12 @@ namespace SignOfSilenceVR
             SteamVR.Initialize();
             SteamVR_Settings.instance.pauseGameWhenDashboardVisible = true;
             new VRInputManager();
+            //new CameraManager();
         }
 
         private void Start()
         {
-            CameraManager.SpawnHands();
+            //CameraManager.SpawnHands();
         }
     }
 }
