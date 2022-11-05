@@ -18,16 +18,8 @@ namespace SignOfSilenceVR
         public static Camera playerCamera = null;
         public static Transform cameraParent;
         private static Transform playerHead = null;
-        private static Vector3 camLocPos = new Vector3(0,0.8f,0.2f);
-
-        // VR Input stuff
-        public static bool RightHandGrab = false;
-        public static bool LeftHandGrab = false;
-        public static Vector2 LeftJoystick = Vector2.zero;
-        public static Vector2 RightJoystick = Vector2.zero;
-
-        // FIrst person camera stuff
-        public static float Turnrate = 3f;
+        private static Vector3 camLocPos = new Vector3(0,0.7f,0.2f); 
+        private static Vector3 camOffsetCrouch = new Vector3(0, 0.15f, 0.25f);
 
         private void Start()
         {
@@ -35,7 +27,6 @@ namespace SignOfSilenceVR
             if (LocalPlayer)
             {
                 setPlayerHead();
-                AdjustPlayerHeadPosition();
                 SetupCamera();
             }
         }
@@ -44,12 +35,21 @@ namespace SignOfSilenceVR
         {
             if (LocalPlayer)
             {
-                var cameraToHead = Vector3.ProjectOnPlane(LocalPlayer.transform.position
-                 - playerCamera.transform.position, LocalPlayer.transform.up);
+                var cameraToHead = Vector3.ProjectOnPlane(playerHead.position
+                 - playerCamera.transform.position, playerHead.transform.up);
 
-                if (cameraToHead.sqrMagnitude > 0.5f || cameraToHead.sqrMagnitude > 10f)
+                if (cameraToHead.sqrMagnitude > 0.5f)
                 {
-                    MoveCameraToPlayerHead();
+                    Logs.WriteWarning(cameraToHead.sqrMagnitude);
+                   // MovePlayerToCamera();
+                }
+                if (LocalPlayer.GetComponent<PlayerMovementController>().IsCrouching)
+                {
+                    cameraParent.localPosition = camOffsetCrouch;
+                }
+                else
+                {
+                    cameraParent.localPosition = camLocPos;
                 }
             }
             else
@@ -58,15 +58,19 @@ namespace SignOfSilenceVR
                 if (LocalPlayer)
                 {
                     setPlayerHead();
-                    AdjustPlayerHeadPosition();
                     SetupCamera();
                 }
             }
         }
 
-        private static void AdjustPlayerHeadPosition()
+        public static void resetPlayerHeadPosition()
         {
-            //playerHead.localPosition = new Vector3(playerHead.localPosition.x, playerHead.localPosition.y, 0);
+            var diffAngle = playerHead.transform.rotation.eulerAngles.y - playerCamera.transform.rotation.eulerAngles.y;
+            cameraParent.Rotate(0, diffAngle, 0);
+            var diffPos = playerHead.transform.position - playerCamera.transform.position;
+            cameraParent.position += diffPos;
+            cameraParent.localPosition = camLocPos;
+
         }
 
         public void SetupCamera()
@@ -80,15 +84,18 @@ namespace SignOfSilenceVR
                 cameraParent.position = playerHead.position;
                 cameraParent.rotation = playerHead.rotation;
                 cameraParent.localRotation = Quaternion.identity;
-                cameraParent.localPosition = Vector3.zero;
-                cameraParent.localPosition = camLocPos;
                 playerCamera.transform.parent = cameraParent;
+                resetPlayerHeadPosition();
             }
         }
 
-        public static void MoveCameraToPlayerHead()
+        public static void MovePlayerToCamera()
         {
-            cameraParent.position += cameraParent.position - cameraParent.Find("Head").transform.position;
+            LocalPlayer.transform.position = new Vector3(
+                playerCamera.transform.position.x,
+                playerCamera.transform.position.y, 
+                playerCamera.transform.position.z
+            );
         }
 
         private void setPlayerHead()

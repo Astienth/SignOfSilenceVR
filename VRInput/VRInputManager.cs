@@ -35,63 +35,61 @@ namespace SignOfSilenceVR
 
         public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.MoveCameraToPlayerHead();
+            CameraManager.resetPlayerHeadPosition();
         }
 
         public static void GrabRightDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.RightHandGrab = true;
+            
         }
         public static void GrabRightUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.RightHandGrab = false;
+            
         }
 
         public static void GrabLeftDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.LeftHandGrab = true;
+            
         }
 
         public static void GrabLeftUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            CameraManager.LeftHandGrab = false;
+            
         }
         // VECTOR 2Ds
         public static void OnLeftJoystickUpdate(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
         {
             // Doesn't seem to stop joystick drift in it's current state?
             if (axis.magnitude > 0.1f)
-                CameraManager.LeftJoystick = axis;
+            {
+
+            }
             else
-                CameraManager.LeftJoystick = Vector2.zero;
+            {
+
+            }
         }
 
         public static void OnRightJoystickUpdate(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
         {
-            // Doesn't seem to stop joystick drift in it's current state?
             if (axis.magnitude > 0.1f)
-                CameraManager.RightJoystick = axis;
+            {
+
+            }
             else
-                CameraManager.RightJoystick = Vector2.zero;
+            {
+
+            }
         }
         // POSES
         public static void UpdateRightHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            if (CameraManager.RightHand)
-            {
-                CameraManager.RightHand.transform.localPosition = fromAction.localPosition;
-                CameraManager.RightHand.transform.localRotation = fromAction.localRotation;
-            }
-
+            
         }
 
         public static void UpdateLeftHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            if (CameraManager.LeftHand)
-            {
-                CameraManager.LeftHand.transform.localPosition = fromAction.localPosition;
-                CameraManager.LeftHand.transform.localRotation = fromAction.localRotation;
-            }
+            
         }
     }
 }
