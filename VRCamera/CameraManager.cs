@@ -42,7 +42,7 @@ namespace SignOfSilenceVR
                    // MovePlayerToCamera();
                 }
                 //update crouch position
-                updateCrouchPosition();
+                //updateCrouchPosition();
             }
             else
             {
@@ -56,41 +56,34 @@ namespace SignOfSilenceVR
 
         public void updateCrouchPosition()
         {
+            cameraParent.position = Vector3.Lerp(cameraParent.position, 
+                LocalPlayer.transform.position + getOffset(), Time.deltaTime * 0.5f);
+        }
+
+        public static Vector3 getOffset()
+        {
             //crouched and or walking
             var playerCtrl = LocalPlayer.GetComponent<PlayerMovementController>();
             switch (true)
             {
                 case true when playerCtrl.IsCrouching && CameraPatches.isMoving:
-                    cameraParent.position = Vector3.Lerp(cameraParent.position,
-                        LocalPlayer.transform.position + camOffsetCrouchedWalking, Time.deltaTime * 2);
-                    break;
+                    return camOffsetCrouchedWalking;  
                 case true when playerCtrl.IsCrouching && !CameraPatches.isMoving:
-                    cameraParent.position = Vector3.Lerp(cameraParent.position,
-                        LocalPlayer.transform.position + camOffsetCrouch, Time.deltaTime * 2);
-                    break;
+                    return camOffsetCrouch;
                 default:
-                    cameraParent.position = Vector3.Lerp(cameraParent.position,
-                        LocalPlayer.transform.position + camLocPos, Time.deltaTime * 2);
-                    break;
+                    return camLocPos;
             }
         }
 
         public static void resetPlayerHeadPosition()
         {
-            /*
-            //{first rotation}
-            //get current head heading in scene
-            //(y-only, to avoid tilting the floor)
-            float offsetAngle = steamCamera.rotation.eulerAngles.y;
-            //now rotate CameraRig in opposite direction to compensate
-            steamController.Rotate(0f, -offsetAngle, 0f);
+            float offsetAngle = playerCamera.transform.rotation.eulerAngles.y
+                - LocalPlayer.transform.rotation.eulerAngles.y;
+            cameraParent.Rotate(0f, -offsetAngle, 0f);
 
-            //{now position}
-            //calculate postional offset between CameraRig and Camera
-            Vector3 offsetPos = steamCamera.position - steamController.position;
-            //reposition CameraRig to desired position minus offset
-            steamController.position = (desiredHeadPos.position - offsetPos);
-            */
+            Vector3 offsetPos = playerCamera.transform.position 
+                - (LocalPlayer.transform.position + getOffset());
+            cameraParent.position -=  offsetPos;
         }
 
         public void SetupCamera()
@@ -166,7 +159,6 @@ namespace SignOfSilenceVR
                     return;
                 }
                 //player exists
-                //Logs.WriteWarning("PLAYER EXISTS");
                 var netID = this.transform.root.GetComponentCached<NetIdentity>();
                 if (!netID || (netID && netID.IsLocalPlayer))
                 {
