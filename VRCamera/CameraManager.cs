@@ -17,17 +17,15 @@ namespace SignOfSilenceVR
         public static GameObject RightHand = null;
         public static Camera playerCamera = null;
         public static Transform cameraParent;
-        private static Transform playerHead = null;
-        private static Vector3 camLocPos = new Vector3(0.1f,0.7f,0.2f); 
-        private static Vector3 camOffsetCrouch = new Vector3(0.1f, 0.15f, 0.2f); 
-        private static Vector3 camOffsetCrouchedWalking = new Vector3(0.1f, 0.45f, 0.2f);
+        private static Vector3 camLocPos = new Vector3(0,0.7f,0); 
+        private static Vector3 camOffsetCrouch = new Vector3(0, 0.15f, 0); 
+        private static Vector3 camOffsetCrouchedWalking = new Vector3(0, 0.45f, 0);
 
         private void Start()
         {
             findPlayer();
             if (LocalPlayer)
             {
-                setPlayerHead();
                 SetupCamera();
             }
         }
@@ -36,51 +34,63 @@ namespace SignOfSilenceVR
         {
             if (LocalPlayer)
             {
-                var cameraToHead = Vector3.ProjectOnPlane(playerHead.position
-                 - playerCamera.transform.position, playerHead.transform.up);
+                var cameraToHead = Vector3.ProjectOnPlane(LocalPlayer.transform.position
+                 - playerCamera.transform.position, LocalPlayer.transform.transform.up);
 
                 if (cameraToHead.sqrMagnitude > 0.5f)
                 {
                    // MovePlayerToCamera();
                 }
-                //crouched and or walking
-                var playerCtrl = LocalPlayer.GetComponent<PlayerMovementController>();
-                switch (true)
-                {
-                    case true when playerCtrl.IsCrouching && CameraPatches.isMoving:
-                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
-                            camOffsetCrouchedWalking, Time.deltaTime);
-                        break;
-                    case true when playerCtrl.IsCrouching && !CameraPatches.isMoving:
-                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
-                            camOffsetCrouch, Time.deltaTime);
-                        break;
-                    default:
-                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
-                            camLocPos, Time.deltaTime);
-                        break;
-                }
+                //update crouch position
+                updateCrouchPosition();
             }
             else
             {
                 findPlayer();
                 if (LocalPlayer)
                 {
-                    setPlayerHead();
                     SetupCamera();
                 }
             }
         }
 
+        public void updateCrouchPosition()
+        {
+            //crouched and or walking
+            var playerCtrl = LocalPlayer.GetComponent<PlayerMovementController>();
+            switch (true)
+            {
+                case true when playerCtrl.IsCrouching && CameraPatches.isMoving:
+                    cameraParent.position = Vector3.Lerp(cameraParent.position,
+                        LocalPlayer.transform.position + camOffsetCrouchedWalking, Time.deltaTime * 2);
+                    break;
+                case true when playerCtrl.IsCrouching && !CameraPatches.isMoving:
+                    cameraParent.position = Vector3.Lerp(cameraParent.position,
+                        LocalPlayer.transform.position + camOffsetCrouch, Time.deltaTime * 2);
+                    break;
+                default:
+                    cameraParent.position = Vector3.Lerp(cameraParent.position,
+                        LocalPlayer.transform.position + camLocPos, Time.deltaTime * 2);
+                    break;
+            }
+        }
+
         public static void resetPlayerHeadPosition()
         {
-            //NOT WORKING ON Y AXE
-            var diffAngle = playerHead.transform.rotation.eulerAngles.y - playerCamera.transform.rotation.eulerAngles.y;
-            cameraParent.Rotate(0, diffAngle, 0);
-            var diffPos = playerHead.transform.position - playerCamera.transform.position;
-            cameraParent.localPosition = camLocPos;
-            cameraParent.position += diffPos;
+            /*
+            //{first rotation}
+            //get current head heading in scene
+            //(y-only, to avoid tilting the floor)
+            float offsetAngle = steamCamera.rotation.eulerAngles.y;
+            //now rotate CameraRig in opposite direction to compensate
+            steamController.Rotate(0f, -offsetAngle, 0f);
 
+            //{now position}
+            //calculate postional offset between CameraRig and Camera
+            Vector3 offsetPos = steamCamera.position - steamController.position;
+            //reposition CameraRig to desired position minus offset
+            steamController.position = (desiredHeadPos.position - offsetPos);
+            */
         }
 
         public void SetupCamera()
@@ -91,8 +101,8 @@ namespace SignOfSilenceVR
             {
                 cameraParent = new GameObject("VrCameraParent").transform;
                 cameraParent.parent = LocalPlayer.transform;
-                cameraParent.position = playerHead.position;
-                cameraParent.rotation = playerHead.rotation;
+                cameraParent.position = LocalPlayer.transform.position + camLocPos;
+                cameraParent.rotation = LocalPlayer.transform.rotation;
                 cameraParent.localRotation = Quaternion.identity;
                 playerCamera.transform.parent = cameraParent;
                 resetPlayerHeadPosition();
@@ -110,13 +120,6 @@ namespace SignOfSilenceVR
             );
         }
 
-        private void setPlayerHead()
-        {
-            if (playerHead == null)
-            {
-                playerHead = LocalPlayer.transform.Find("HEAD_HANDS").transform;
-            }
-        }
         private void hideHead()
         {
             var headBone = getHeadBone();
