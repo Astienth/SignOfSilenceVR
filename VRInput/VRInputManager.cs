@@ -23,6 +23,7 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.grableft.AddOnStateDownListener(GrabLeftDown, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.confirm.AddOnStateUpListener(Confirm, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.actionbar.AddOnStateUpListener(Menus, SteamVR_Input_Sources.Any);
 
             // VECTOR 2Ds
             SteamVR_Actions._default.move.AddOnUpdateListener(OnLeftJoystickUpdate, SteamVR_Input_Sources.Any);
@@ -33,9 +34,14 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.LeftHandPose.AddOnUpdateListener(SteamVR_Input_Sources.Any, UpdateLeftHand);
         }
 
-        public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        public static void Menus(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
             CameraManager.resetPlayerHeadPosition();
+        }
+
+        public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        {
+            CameraManager.SpawnHands();
         }
 
         public static void GrabRightDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -84,12 +90,20 @@ namespace SignOfSilenceVR
         // POSES
         public static void UpdateRightHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            
+            if (CameraManager.RightHand)
+            {
+                CameraManager.RightHand.transform.localPosition = fromAction.localPosition;
+                CameraManager.RightHand.transform.localRotation = fromAction.localRotation;
+            }
         }
 
         public static void UpdateLeftHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            
+            if (CameraManager.LeftHand)
+            {
+                CameraManager.LeftHand.transform.localPosition = fromAction.localPosition;
+                CameraManager.LeftHand.transform.localRotation = fromAction.localRotation;
+            }
         }
     }
 }

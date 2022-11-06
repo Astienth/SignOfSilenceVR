@@ -18,8 +18,9 @@ namespace SignOfSilenceVR
         public static Camera playerCamera = null;
         public static Transform cameraParent;
         private static Transform playerHead = null;
-        private static Vector3 camLocPos = new Vector3(0,0.7f,0.2f); 
-        private static Vector3 camOffsetCrouch = new Vector3(0, 0.15f, 0.25f);
+        private static Vector3 camLocPos = new Vector3(0.1f,0.7f,0.2f); 
+        private static Vector3 camOffsetCrouch = new Vector3(0.1f, 0.15f, 0.2f); 
+        private static Vector3 camOffsetCrouchedWalking = new Vector3(0.1f, 0.45f, 0.2f);
 
         private void Start()
         {
@@ -40,16 +41,24 @@ namespace SignOfSilenceVR
 
                 if (cameraToHead.sqrMagnitude > 0.5f)
                 {
-                    Logs.WriteWarning(cameraToHead.sqrMagnitude);
                    // MovePlayerToCamera();
                 }
-                if (LocalPlayer.GetComponent<PlayerMovementController>().IsCrouching)
+                //crouched and or walking
+                var playerCtrl = LocalPlayer.GetComponent<PlayerMovementController>();
+                switch (true)
                 {
-                    cameraParent.localPosition = camOffsetCrouch;
-                }
-                else
-                {
-                    cameraParent.localPosition = camLocPos;
+                    case true when playerCtrl.IsCrouching && CameraPatches.isMoving:
+                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
+                            camOffsetCrouchedWalking, Time.deltaTime);
+                        break;
+                    case true when playerCtrl.IsCrouching && !CameraPatches.isMoving:
+                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
+                            camOffsetCrouch, Time.deltaTime);
+                        break;
+                    default:
+                        cameraParent.localPosition = Vector3.Lerp(cameraParent.localPosition,
+                            camLocPos, Time.deltaTime);
+                        break;
                 }
             }
             else
@@ -65,11 +74,12 @@ namespace SignOfSilenceVR
 
         public static void resetPlayerHeadPosition()
         {
+            //NOT WORKING ON Y AXE
             var diffAngle = playerHead.transform.rotation.eulerAngles.y - playerCamera.transform.rotation.eulerAngles.y;
             cameraParent.Rotate(0, diffAngle, 0);
             var diffPos = playerHead.transform.position - playerCamera.transform.position;
-            cameraParent.position += diffPos;
             cameraParent.localPosition = camLocPos;
+            cameraParent.position += diffPos;
 
         }
 
@@ -166,14 +176,29 @@ namespace SignOfSilenceVR
         {
             if (!RightHand)
             {
-                RightHand = GameObject.Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
-                RightHand.transform.parent = LocalPlayer.transform;
+                RightHand = Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector,
+                    Quaternion.identityQuaternion);
+                RightHand.transform.parent = (LocalPlayer) ? LocalPlayer.transform : Camera.main.transform;
+                RightHand.SetActive(false);
+                var pose = RightHand.GetComponent<SteamVR_Behaviour_Pose>();
+                pose.inputSource = SteamVR_Input_Sources.RightHand;
+                pose.poseAction = SteamVR_Actions.default_RightHandPose;
             }
             
             if (!LeftHand)
             {
-                LeftHand = GameObject.Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector, Quaternion.identityQuaternion);
-                LeftHand.transform.parent = LocalPlayer.transform;
+                LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
+                    Quaternion.identityQuaternion);
+                LeftHand.transform.parent = (LocalPlayer) ? LocalPlayer.transform : Camera.main.transform;
+                LeftHand.SetActive(false);
+                var pose = LeftHand.GetComponent<SteamVR_Behaviour_Pose>();
+                pose.inputSource = SteamVR_Input_Sources.LeftHand;
+                pose.poseAction = SteamVR_Actions.default_LeftHandPose;
+            }
+            if (RightHand && LeftHand)
+            {
+                RightHand.SetActive(true);
+                LeftHand.SetActive(true);
             }
         }
     }
