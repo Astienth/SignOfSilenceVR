@@ -39,10 +39,10 @@ namespace SignOfSilenceVR
 
                 if (cameraToHead.sqrMagnitude > 0.5f)
                 {
-                   // MovePlayerToCamera();
+                    // resetPlayerHeadPosition();
                 }
                 //update crouch position
-                //updateCrouchPosition();
+                updateCrouchPosition();
             }
             else
             {
@@ -57,7 +57,7 @@ namespace SignOfSilenceVR
         public void updateCrouchPosition()
         {
             cameraParent.position = Vector3.Lerp(cameraParent.position, 
-                LocalPlayer.transform.position + getOffset(), Time.deltaTime * 0.5f);
+                LocalPlayer.transform.position + getOffset(), Time.deltaTime * 2);
         }
 
         public static Vector3 getOffset()

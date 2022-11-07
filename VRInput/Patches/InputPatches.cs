@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 
 namespace SignOfSilenceVR
 {
@@ -15,7 +16,7 @@ namespace SignOfSilenceVR
                 Traverse.Create<Donteco.GamepadManager>().Property("GamepadConnected").SetValue(true);
             }
         }
-        
+
         [HarmonyPatch]
         class DontShowGamepadNotif
         {

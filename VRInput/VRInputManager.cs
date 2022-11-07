@@ -17,13 +17,13 @@ namespace SignOfSilenceVR
         {
             // BOOLEANS
             SteamVR_Actions._default.TriggerRight.AddOnStateUpListener(UseItem, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.TriggerLeft.AddOnStateUpListener(Run, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.TriggerLeft.AddOnStateUpListener(Flashlight, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grabright.AddOnStateDownListener(GrabRightDown, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grabright.AddOnStateUpListener(GrabRightUp, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.grableft.AddOnStateDownListener(GrabLeftDown, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.grableft.AddOnUpdateListener(Run, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.confirm.AddOnStateUpListener(Confirm, SteamVR_Input_Sources.Any); 
-            SteamVR_Actions._default.recenter.AddOnActiveChangeListener(Recenter, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.recenter.AddOnChangeListener(Recenter, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.actionbar.AddOnStateUpListener(ActionBar, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.decline.AddOnStateUpListener(Decline, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.throwitem.AddOnActiveChangeListener(throwItem, SteamVR_Input_Sources.Any);
@@ -34,7 +34,7 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.SwapTurnRight.AddOnStateUpListener(SwapTurnRight, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.highlight.AddOnStateDownListener(Map, SteamVR_Input_Sources.Any);
             // VECTOR 2Ds
-            SteamVR_Actions._default.move.AddOnUpdateListener(OnLeftJoystickUpdate, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.move.AddOnUpdateListener(Move, SteamVR_Input_Sources.Any);
 
             // POSES
             SteamVR_Actions._default.RightHandPose.AddOnUpdateListener(SteamVR_Input_Sources.Any, UpdateRightHand);
@@ -44,14 +44,25 @@ namespace SignOfSilenceVR
         //Vector1
         private static void throwItem(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, bool active)
         {
-          //  InputSystem.SimulateButton(InputKeys.ThrowItem);
+            //  InputSystem.SimulateButton(InputKeys.ThrowItem);
         }
-        private static void Recenter(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, bool active)
+
+        private static void Recenter(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
         {
-           // CameraManager.resetPlayerHeadPosition();
+            if (newAxis == 1)
+            {
+                CameraManager.resetPlayerHeadPosition();
+            }
         }
 
         //booleans
+        private static void Run(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
+        {
+            if (newState)
+            {
+                InputSystem.SimulateButton(InputKeys.Run);
+            }
+        }
         public static void SwapTurnLeft(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
 
@@ -70,11 +81,6 @@ namespace SignOfSilenceVR
         public static void UseItem(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
             InputSystem.SimulateButton(InputKeys.UseItem);
-        }
-
-        public static void Run(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
-        {
-            InputSystem.SimulateButton(InputKeys.Run);
         }
 
         public static void Jump(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -117,7 +123,7 @@ namespace SignOfSilenceVR
             
         }
 
-        public static void GrabLeftDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        public static void Flashlight(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
             InputSystem.SimulateButton(InputKeys.Flashlight);
         }
@@ -127,10 +133,24 @@ namespace SignOfSilenceVR
             
         }
         // VECTOR 2Ds
-        public static void OnLeftJoystickUpdate(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
+        public static void Move(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
         {
-            var movement = new Vector3(axis.x, 0.0f, axis.y);
-            //InputSystem.OnMovementInput(movement, Vector2.zero);
+            if (axis.y > 0.1f)
+            {
+                InputSystem.SimulateButton(InputKeys.MoveForward);
+            }
+            if (axis.y < 0.1f)
+            {
+                InputSystem.SimulateButton(InputKeys.MoveBack);
+            }
+            if (axis.x < 0.1f)
+            {
+                InputSystem.SimulateButton(InputKeys.MoveLeft);
+            }
+            if (axis.x > 0.1f)
+            {
+                InputSystem.SimulateButton(InputKeys.MoveRight);
+            }
         }
         // POSES
         public static void UpdateRightHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
