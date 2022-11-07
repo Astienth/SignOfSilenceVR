@@ -1,7 +1,7 @@
 {
    "action_manifest_version" : 0,
    "alias_info" : {},
-   "app_key" : "application.generated.unity.blank2019.3.4.exe",
+   "app_key" : "system.generated.sign of silence.exe",
    "bindings" : {
       "/actions/buggy" : {
          "chords" : [],
@@ -70,7 +70,7 @@
                      "output" : "/actions/default/in/actionbar"
                   },
                   "long" : {
-                     "output" : "/actions/default/in/options"
+                     "output" : "/actions/default/in/recenter"
                   }
                },
                "mode" : "button",
@@ -91,7 +91,7 @@
                      "output" : "/actions/default/in/pause"
                   },
                   "long" : {
-                     "output" : "/actions/default/in/menus"
+                     "output" : "/actions/default/in/throwitem"
                   }
                },
                "mode" : "button",
@@ -134,6 +134,12 @@
                   "east" : {
                      "output" : "/actions/default/in/swapturnright"
                   },
+                  "north" : {
+                     "output" : "/actions/default/in/jump"
+                  },
+                  "south" : {
+                     "output" : "/actions/default/in/crouch"
+                  },
                   "west" : {
                      "output" : "/actions/default/in/swapturnleft"
                   }
@@ -167,7 +173,7 @@
    "controller_type" : "oculus_touch",
    "description" : "",
    "interaction_profile" : "",
-   "name" : "Configuration « Blank2019.3.4 [Testing] » enregistrée pour Oculus Touch Controller",
+   "name" : "Ma configuration de Sign Of Silence pour Oculus Touch Controller",
    "options" : {},
    "simulated_actions" : []
 }
