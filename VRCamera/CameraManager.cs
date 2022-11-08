@@ -17,9 +17,6 @@ namespace SignOfSilenceVR
         public static GameObject RightHand = null;
         public static Camera playerCamera = null;
         public static Transform cameraParent;
-        private static Vector3 camLocPos = new Vector3(0,0.7f,0); 
-        private static Vector3 camOffsetCrouch = new Vector3(0, 0.15f, 0); 
-        private static Vector3 camOffsetCrouchedWalking = new Vector3(0, 0.45f, 0);
 
         private void Start()
         {
@@ -54,24 +51,31 @@ namespace SignOfSilenceVR
             }
         }
 
+        //update crouch position; following head ingame
         public void updateCrouchPosition()
         {
-            cameraParent.position = Vector3.Lerp(cameraParent.position, 
-                LocalPlayer.transform.position + getOffset(), Time.deltaTime * 2);
+            Vector3 offsetPos = playerCamera.transform.position
+                - getHeadBone().position;
+            cameraParent.position = Vector3.Lerp(
+                cameraParent.position,
+                cameraParent.position - offsetPos ,
+                Time.deltaTime * 2
+            );
         }
 
-        public static Vector3 getOffset()
+        // Not used anymore but may be useful
+        public static int getCrouchState()
         {
             //crouched and or walking
             var playerCtrl = LocalPlayer.GetComponent<PlayerMovementController>();
             switch (true)
             {
                 case true when playerCtrl.IsCrouching && CameraPatches.isMoving:
-                    return camOffsetCrouchedWalking;  
+                    return 1;
                 case true when playerCtrl.IsCrouching && !CameraPatches.isMoving:
-                    return camOffsetCrouch;
+                    return 0;
                 default:
-                    return camLocPos;
+                    return 2;
             }
         }
 
@@ -82,7 +86,7 @@ namespace SignOfSilenceVR
             cameraParent.Rotate(0f, -offsetAngle, 0f);
 
             Vector3 offsetPos = playerCamera.transform.position 
-                - (LocalPlayer.transform.position + getOffset());
+                - getHeadBone().position;
             cameraParent.position -=  offsetPos;
         }
 
@@ -94,7 +98,7 @@ namespace SignOfSilenceVR
             {
                 cameraParent = new GameObject("VrCameraParent").transform;
                 cameraParent.parent = LocalPlayer.transform;
-                cameraParent.position = LocalPlayer.transform.position + camLocPos;
+                cameraParent.position = getHeadBone().position;
                 cameraParent.rotation = LocalPlayer.transform.rotation;
                 cameraParent.localRotation = Quaternion.identity;
                 playerCamera.transform.parent = cameraParent;
@@ -104,6 +108,9 @@ namespace SignOfSilenceVR
             }
         }
 
+        //trying to implement a way to move virtual player
+        // if real player moves in real life.
+        //Might conflict with updateCrouchPosition
         public static void MovePlayerToCamera()
         {
             LocalPlayer.transform.position = new Vector3(
@@ -122,7 +129,7 @@ namespace SignOfSilenceVR
             }
         }
 
-        private Transform getHeadBone()
+        public static Transform getHeadBone()
         {
             if (LocalPlayer == null)
             {
