@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 using Donteco;
 
@@ -58,7 +53,7 @@ namespace SignOfSilenceVR
                 - getHeadBone().position;
             cameraParent.position = Vector3.Lerp(
                 cameraParent.position,
-                cameraParent.position - offsetPos ,
+                cameraParent.position - offsetPos,
                 Time.deltaTime * 2
             );
         }
@@ -85,9 +80,9 @@ namespace SignOfSilenceVR
                 - LocalPlayer.transform.rotation.eulerAngles.y;
             cameraParent.Rotate(0f, -offsetAngle, 0f);
 
-            Vector3 offsetPos = playerCamera.transform.position 
+            Vector3 offsetPos = playerCamera.transform.position
                 - getHeadBone().position;
-            cameraParent.position -=  offsetPos;
+            cameraParent.position -= offsetPos;
         }
 
         public void SetupCamera()
@@ -115,7 +110,7 @@ namespace SignOfSilenceVR
         {
             LocalPlayer.transform.position = new Vector3(
                 playerCamera.transform.position.x,
-                playerCamera.transform.position.y, 
+                playerCamera.transform.position.y,
                 playerCamera.transform.position.z
             );
         }
@@ -174,6 +169,7 @@ namespace SignOfSilenceVR
             }
         }
 
+        //NOT WORKING YET
         public static void SpawnHands()
         {
             if (!RightHand)

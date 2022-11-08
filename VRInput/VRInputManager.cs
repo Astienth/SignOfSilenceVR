@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 using Valve.VR;
 using Donteco;
 
@@ -8,6 +6,10 @@ namespace SignOfSilenceVR
 {
     public class VRInputManager
     {
+        public static bool rotateLeft = false;
+        public static bool rotateRight = false;
+        public static Vector2 axisMove = Vector2.zero;
+
         static VRInputManager()
         {
             SetUpListeners();
@@ -26,7 +28,7 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.recenter.AddOnChangeListener(Recenter, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.actionbar.AddOnStateUpListener(ActionBar, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.decline.AddOnStateUpListener(Decline, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.throwitem.AddOnActiveChangeListener(throwItem, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.throwitem.AddOnChangeListener(throwItem, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.pause.AddOnStateUpListener(Pause, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.jump.AddOnStateUpListener(Jump, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.crouch.AddOnStateUpListener(Crouch, SteamVR_Input_Sources.Any);
@@ -42,9 +44,12 @@ namespace SignOfSilenceVR
         }
 
         //Vector1
-        private static void throwItem(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, bool active)
+        private static void throwItem(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
         {
-            //  InputSystem.SimulateButton(InputKeys.ThrowItem);
+            if (newAxis == 1)
+            {
+                InputSystem.SimulateButton(InputKeys.ThrowItem);
+            }
         }
 
         private static void Recenter(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
@@ -65,12 +70,12 @@ namespace SignOfSilenceVR
         }
         public static void SwapTurnLeft(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-
+            rotateLeft = true;
         }
 
         public static void SwapTurnRight(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-
+            rotateRight = true;
         }
 
         public static void Map(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
@@ -135,21 +140,13 @@ namespace SignOfSilenceVR
         // VECTOR 2Ds
         public static void Move(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
         {
-            if (axis.y > 0.1f)
+            if (axis != Vector2.zero)
             {
-                InputSystem.SimulateButton(InputKeys.MoveForward);
+                axisMove = axis;
             }
-            if (axis.y < 0.1f)
+            else
             {
-                InputSystem.SimulateButton(InputKeys.MoveBack);
-            }
-            if (axis.x < 0.1f)
-            {
-                InputSystem.SimulateButton(InputKeys.MoveLeft);
-            }
-            if (axis.x > 0.1f)
-            {
-                InputSystem.SimulateButton(InputKeys.MoveRight);
+                axisMove = Vector2.zero;
             }
         }
         // POSES

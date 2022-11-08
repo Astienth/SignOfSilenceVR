@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using UnityEngine;
 
 namespace SignOfSilenceVR
 {
@@ -15,9 +16,9 @@ namespace SignOfSilenceVR
                 Donteco.GamepadManager.AcceptGamepad = true;
                 Traverse.Create<Donteco.GamepadManager>().Property("GamepadConnected").SetValue(true);
             }
-        }
+        }        
 
-        [HarmonyPatch]
+       [HarmonyPatch]
         class DontShowGamepadNotif
         {
             [HarmonyPrefix]
@@ -25,6 +26,32 @@ namespace SignOfSilenceVR
             public static bool PreFix()
             {
                 return false;
+            }
+        }
+        [HarmonyPatch]
+        class GamepadInput
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Donteco.InputSystem), "GamepadInput")]
+            public static void PostFix(ref Vector3 movement, ref Vector2 direction)
+            {
+                if (VRInputManager.rotateLeft)
+                {
+                    direction = new Vector2(-0.5f,0.5f);
+                    VRInputManager.rotateLeft = false;
+                }
+
+                if (VRInputManager.rotateRight)
+                {
+                    direction = new Vector2(0.5f,0.5f);
+                    VRInputManager.rotateRight = false;
+                }
+
+                if (VRInputManager.axisMove != Vector2.zero)
+                {
+                    movement = new Vector3(VRInputManager.axisMove.x, 0.0f, VRInputManager.axisMove.y);
+                    VRInputManager.axisMove = Vector2.zero;
+                }
             }
         }
     }
