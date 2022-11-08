@@ -40,6 +40,7 @@ namespace SignOfSilenceVR
                     canvas.GetComponent<AttachedUi>()
                         .setPosition(new Vector3(903.6f,64.2f,230.3f), Quaternion.Euler(0,69,0));
                     patchedCanvases.Add(canvas);
+                    gameObject.AddComponent<VRHands>();
                 }
             }
         }

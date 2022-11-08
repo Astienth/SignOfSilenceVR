@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1466326213
+CRC: 3427448705
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a9ec0693c5db477021318637b6a0f29b
+    Hash: 7a5862b2c1ade76bac6a2ef129e80c72
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 67e6358a6c833a88413edc2c3e370151
+    Hash: ab2052a44ed54b00b0095bd599c4e5c8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -34,12 +34,16 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 00f6c0d7b5a00aa4a8d38a09a0480032, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5890e3cad70bea64d91aef9145ba3454, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: e7418c7dd8f977d4e969202d3fa7e926, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 137
   Script: {instanceID: 0}
 Assets:
-- Assets/SteamVR/Prefabs/vr_glove_right_model_slim.prefab
-- Assets/SteamVR/Prefabs/vr_glove_left_model_slim.prefab
+- Assets/Prefab/ControllerRight.prefab
+- Assets/Prefab/ControllerLeft.prefab
 Dependencies: []

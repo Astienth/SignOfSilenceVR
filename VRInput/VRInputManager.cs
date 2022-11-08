@@ -129,7 +129,6 @@ namespace SignOfSilenceVR
 
         public static void Confirm(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            //CameraManager.SpawnHands();
             InputSystem.SimulateButton(InputKeys.Action);
         }
 
@@ -166,19 +165,19 @@ namespace SignOfSilenceVR
         // POSES
         public static void UpdateRightHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            if (CameraManager.RightHand)
+            if (VRHands.RightHand)
             {
-                CameraManager.RightHand.transform.localPosition = fromAction.localPosition;
-                CameraManager.RightHand.transform.localRotation = fromAction.localRotation;
+                VRHands.RightHand.transform.localPosition = fromAction.localPosition;
+                VRHands.RightHand.transform.localRotation = fromAction.localRotation;
             }
         }
 
         public static void UpdateLeftHand(SteamVR_Action_Pose fromAction, SteamVR_Input_Sources fromSource)
         {
-            if (CameraManager.LeftHand)
+            if (VRHands.LeftHand)
             {
-                CameraManager.LeftHand.transform.localPosition = fromAction.localPosition;
-                CameraManager.LeftHand.transform.localRotation = fromAction.localRotation;
+                VRHands.LeftHand.transform.localPosition = fromAction.localPosition;
+                VRHands.LeftHand.transform.localRotation = fromAction.localRotation;
             }
         }
     }

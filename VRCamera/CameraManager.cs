@@ -8,8 +8,6 @@ namespace SignOfSilenceVR
     {
         // VR Origin and body stuff
         public static GameObject LocalPlayer = null;
-        public static GameObject LeftHand = null;
-        public static GameObject RightHand = null;
         public static Camera playerCamera = null;
         public static Transform cameraParent;
 
@@ -166,37 +164,6 @@ namespace SignOfSilenceVR
                 {
                     LocalPlayer = localPlayer;
                 }
-            }
-        }
-
-        //NOT WORKING YET
-        public static void SpawnHands()
-        {
-            if (!RightHand)
-            {
-                RightHand = Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector,
-                    Quaternion.identityQuaternion);
-                RightHand.transform.parent = (LocalPlayer) ? LocalPlayer.transform : Camera.main.transform;
-                RightHand.SetActive(false);
-                var pose = RightHand.GetComponent<SteamVR_Behaviour_Pose>();
-                pose.inputSource = SteamVR_Input_Sources.RightHand;
-                pose.poseAction = SteamVR_Actions.default_RightHandPose;
-            }
-            
-            if (!LeftHand)
-            {
-                LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
-                    Quaternion.identityQuaternion);
-                LeftHand.transform.parent = (LocalPlayer) ? LocalPlayer.transform : Camera.main.transform;
-                LeftHand.SetActive(false);
-                var pose = LeftHand.GetComponent<SteamVR_Behaviour_Pose>();
-                pose.inputSource = SteamVR_Input_Sources.LeftHand;
-                pose.poseAction = SteamVR_Actions.default_LeftHandPose;
-            }
-            if (RightHand && LeftHand)
-            {
-                RightHand.SetActive(true);
-                LeftHand.SetActive(true);
             }
         }
     }
