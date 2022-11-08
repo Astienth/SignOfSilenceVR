@@ -1,104 +1,108 @@
 {
-    "actions": [
-        {
-            "name": "/actions/default/in/SkeletonLeftHand",
-            "type": "skeleton",
-            "skeleton": "/skeleton/hand/left"
-        },
-        {
-            "name": "/actions/default/in/SkeletonRightHand",
-            "type": "skeleton",
-            "skeleton": "/skeleton/hand/right"
-        },
-        {
-            "name": "/actions/default/in/LeftHandPose",
-            "type": "pose"
-        },
-        {
-            "name": "/actions/default/in/RightHandPose",
-            "type": "pose"
-        },
-        {
-            "name": "/actions/default/in/decline",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/confirm",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/actionbar",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/pause",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/move",
-            "type": "vector2"
-        },
-        {
-            "name": "/actions/default/in/movecamera",
-            "type": "vector2"
-        },
-        {
-            "name": "/actions/default/in/throwitem",
-            "type": "vector1"
-        },
-        {
-            "name": "/actions/default/in/openmenu",
-            "type": "vector1"
-        },
-        {
-            "name": "/actions/default/in/recenter",
-            "type": "vector1"
-        },
-        {
-            "name": "/actions/default/in/jump",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/crouch",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/grableft",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/grabright",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/options",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/highlight",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/TriggerLeft",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/TriggerRight",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/SwapTurnLeft",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/in/SwapTurnRight",
-            "type": "boolean"
-        },
-        {
-            "name": "/actions/default/out/Haptic",
-            "type": "vibration"
-        }
-    ],
+  "actions": [
+    {
+      "name": "/actions/default/in/SkeletonLeftHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/left"
+    },
+    {
+      "name": "/actions/default/in/SkeletonRightHand",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/right"
+    },
+    {
+      "name": "/actions/default/in/LeftHandPose",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/default/in/RightHandPose",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/default/in/decline",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/confirm",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/actionbar",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/pause",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/move",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/movecamera",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/throwitem",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/in/openmenu",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/in/recenter",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/in/jump",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/crouch",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/grableft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/grabright",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/options",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/highlight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/TriggerLeft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/TriggerRight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/SwapTurnLeft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/SwapTurnRight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/default/in/Squeeze",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/default/out/Haptic",
+      "type": "vibration"
+    }
+  ],
   "action_sets": [
     {
       "name": "/actions/default",
@@ -157,31 +161,32 @@
   ],
   "localization": [
     {
-        "language_tag": "en_US",
-        "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
-        "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-        "/actions/default/out/Haptic": "Haptic",
-        "/actions/default/in/LeftHandPose": "Left Hand Pose",
-        "/actions/default/in/RightHandPose": "Right Hand Pose",
-        "/actions/default/in/decline": "Decline",
-        "/actions/default/in/confirm": "Confirm",
-        "/actions/default/in/actionbar": "Toggle Actionbar",
-        "/actions/default/in/pause": "Pause game",
-        "/actions/default/in/move": "Move",
-        "/actions/default/in/movecamera": "Move Camera",
-        "/actions/default/in/throwitem": "throwitem",
-        "/actions/default/in/openmenu": "OpenMenu",
-        "/actions/default/in/recenter": "Recenter",
-        "/actions/default/in/jump": "Jump",
-        "/actions/default/in/crouch": "Crouch",
-        "/actions/default/in/grableft": "Grab (Left)",
-        "/actions/default/in/grabright": "Grab (Right)",
-        "/actions/default/in/options": "Options menu",
-        "/actions/default/in/highlight": "Highlight Objects",
-        "/actions/default/in/TriggerLeft": "Trigger Left",
-        "/actions/default/in/TriggerRight": "Trigger Right",
-        "/actions/default/in/SwapTurnLeft": "SwapTurnLeft",
-        "/actions/default/in/SwapTurnRight": "SwapTurnRight"
+      "language_tag": "en_US",
+      "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
+      "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
+      "/actions/default/out/Haptic": "Haptic",
+      "/actions/default/in/LeftHandPose": "Left Hand Pose",
+      "/actions/default/in/RightHandPose": "Right Hand Pose",
+      "/actions/default/in/decline": "Decline",
+      "/actions/default/in/confirm": "Confirm",
+      "/actions/default/in/actionbar": "Toggle Actionbar",
+      "/actions/default/in/pause": "Pause game",
+      "/actions/default/in/move": "Move",
+      "/actions/default/in/movecamera": "Move Camera",
+      "/actions/default/in/throwitem": "throwitem",
+      "/actions/default/in/openmenu": "OpenMenu",
+      "/actions/default/in/recenter": "Recenter",
+      "/actions/default/in/jump": "Jump",
+      "/actions/default/in/crouch": "Crouch",
+      "/actions/default/in/grableft": "Grab (Left)",
+      "/actions/default/in/grabright": "Grab (Right)",
+      "/actions/default/in/options": "Options menu",
+      "/actions/default/in/highlight": "Highlight Objects",
+      "/actions/default/in/TriggerLeft": "Trigger Left",
+      "/actions/default/in/TriggerRight": "Trigger Right",
+      "/actions/default/in/SwapTurnLeft": "SwapTurnLeft",
+      "/actions/default/in/SwapTurnRight": "SwapTurnRight",
+      "/actions/default/in/Squeeze": "Squeeze"
     }
   ]
 }

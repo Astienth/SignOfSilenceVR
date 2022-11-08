@@ -16,8 +16,8 @@ namespace SignOfSilenceVR
         public AssetLoader()
         {
             var VRHands = LoadBundle("vrhands");
-            LeftHandBase = LoadAsset<GameObject>(VRHands, "Prefab/ControllerLeft.prefab");
-            RightHandBase = LoadAsset<GameObject>(VRHands, "Prefab/ControllerRight.prefab");
+            LeftHandBase = LoadAsset<GameObject>(VRHands, "Prefabs/HandLeft.prefab");
+            RightHandBase = LoadAsset<GameObject>(VRHands, "Prefabs/HandRight.prefab");
         }
 
         private T LoadAsset<T>(AssetBundle bundle, string prefabName) where T : UnityEngine.Object
