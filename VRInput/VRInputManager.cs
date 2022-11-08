@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Valve.VR;
 using Donteco;
+using System;
 
 namespace SignOfSilenceVR
 {
@@ -32,8 +33,8 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.pause.AddOnStateUpListener(Pause, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.jump.AddOnStateUpListener(Jump, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.crouch.AddOnStateUpListener(Crouch, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.SwapTurnLeft.AddOnStateUpListener(SwapTurnLeft, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.SwapTurnRight.AddOnStateUpListener(SwapTurnRight, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.SwapTurnLeft.AddOnUpdateListener(SwapTurnLeft, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.SwapTurnRight.AddOnUpdateListener(SwapTurnRight, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.highlight.AddOnStateDownListener(Map, SteamVR_Input_Sources.Any);
             // VECTOR 2Ds
             SteamVR_Actions._default.move.AddOnUpdateListener(Move, SteamVR_Input_Sources.Any);
@@ -68,14 +69,27 @@ namespace SignOfSilenceVR
                 InputSystem.SimulateButton(InputKeys.Run);
             }
         }
-        public static void SwapTurnLeft(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        private static void SwapTurnLeft(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
         {
-            rotateLeft = true;
+            if (newState)
+            {
+                rotateLeft = true;
+            }
+            else
+            {
+                rotateLeft = false;
+            }
         }
-
-        public static void SwapTurnRight(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        private static void SwapTurnRight(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
         {
-            rotateRight = true;
+            if (newState)
+            {
+                rotateRight = true;
+            }
+            else
+            {
+                rotateRight = false;
+            }
         }
 
         public static void Map(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)

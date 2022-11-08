@@ -58,7 +58,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/grabright"
+                     "output" : "/actions/default/in/crouch"
                   }
                },
                "mode" : "trigger",
@@ -134,12 +134,6 @@
                   "east" : {
                      "output" : "/actions/default/in/swapturnright"
                   },
-                  "north" : {
-                     "output" : "/actions/default/in/jump"
-                  },
-                  "south" : {
-                     "output" : "/actions/default/in/crouch"
-                  },
                   "west" : {
                      "output" : "/actions/default/in/swapturnleft"
                   }
@@ -153,7 +147,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/triggerright"
+                     "output" : "/actions/default/in/jump"
                   }
                },
                "mode" : "button",

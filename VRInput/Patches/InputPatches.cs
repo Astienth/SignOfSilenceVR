@@ -37,13 +37,13 @@ namespace SignOfSilenceVR
             {
                 if (VRInputManager.rotateLeft)
                 {
-                    direction = new Vector2(-0.5f,0.5f);
+                    direction = new Vector2(-1,0);
                     VRInputManager.rotateLeft = false;
                 }
 
                 if (VRInputManager.rotateRight)
                 {
-                    direction = new Vector2(0.5f,0.5f);
+                    direction = new Vector2(1,0);
                     VRInputManager.rotateRight = false;
                 }
 
