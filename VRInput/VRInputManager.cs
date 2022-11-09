@@ -19,12 +19,12 @@ namespace SignOfSilenceVR
         public static void SetUpListeners()
         {
             // BOOLEANS
-            SteamVR_Actions._default.TriggerRight.AddOnStateUpListener(UseItem, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.TriggerLeft.AddOnStateUpListener(Flashlight, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.grabright.AddOnStateDownListener(GrabRightDown, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.grabright.AddOnStateUpListener(GrabRightUp, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.TriggerRight.AddOnStateUpListener(Flashlight, SteamVR_Input_Sources.Any);
+            //SteamVR_Actions._default.TriggerLeft.AddOnStateUpListener(Flashlight, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.grabright.AddOnStateUpListener(UseItem, SteamVR_Input_Sources.Any);
+            //SteamVR_Actions._default.grabright.AddOnStateUpListener(GrabRightUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnUpdateListener(Run, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
+            //SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.confirm.AddOnStateUpListener(Confirm, SteamVR_Input_Sources.Any); 
             SteamVR_Actions._default.recenter.AddOnChangeListener(Recenter, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.actionbar.AddOnStateUpListener(ActionBar, SteamVR_Input_Sources.Any);

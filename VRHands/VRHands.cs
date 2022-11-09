@@ -24,6 +24,7 @@ namespace SignOfSilenceVR
             {
                 parent = parentUpdate;
                 createHands();
+                attachLightToHand();
             }
         }
 
@@ -53,7 +54,8 @@ namespace SignOfSilenceVR
             RightHand.transform.localPosition = Vector3.zero;
             RightHand.transform.localRotation = Quaternion.identity;
             RightHand.transform.localScale = Vector3.one;
-            RightHand.AddComponent<Pointer>().gameObject.SetActive(showPointer);
+            if (showPointer) RightHand.AddComponent<Pointer>();
+            RightHand.transform.Find("Model").gameObject.SetActive(showModel);
 
             LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
                 Quaternion.identityQuaternion);
@@ -62,7 +64,24 @@ namespace SignOfSilenceVR
             LeftHand.transform.localPosition = Vector3.zero;
             LeftHand.transform.localRotation = Quaternion.identity;
             LeftHand.transform.localScale = Vector3.one;
-            LeftHand.AddComponent<Pointer>().gameObject.SetActive(showPointer);
+            if (showPointer) LeftHand.AddComponent<Pointer>();
+            LeftHand.transform.Find("Model").gameObject.SetActive(showModel);
+        }
+
+        public static void attachLightToHand()
+        {
+            if (CameraManager.cameraParent != null)
+            {
+                if(RightHand)
+                {
+                    //CameraManager.cameraParent.Find("Head")
+                    //  .transform.Find("LightsItemInHand").transform.parent = RightHand.transform;
+                    var spotlight = CameraManager.cameraParent.Find("Head")
+                        .transform.Find("Spotlight").transform;
+                    spotlight.parent = RightHand.transform;
+                    spotlight.eulerAngles = new Vector3(35, 345, 0);
+                }
+            }
         }
 
         public static void OnDestroy()
