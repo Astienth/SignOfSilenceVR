@@ -114,7 +114,7 @@ namespace SignOfSilenceVR
 
         public static void Decline(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            VRHands.SpawnHands();
+            //VRHands.SpawnHands();
         }
 
         public static void ActionBar(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)

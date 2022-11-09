@@ -8,10 +8,9 @@ namespace SignOfSilenceVR
 
         public static GameObject RightHand = null;
         public static GameObject LeftHand = null;
-
-        private void Start()
-        {
-        }
+        public static Transform parent;
+        public static bool showPointer = false;
+        public static bool showModel = false;
 
         private void Update()
         {
@@ -20,32 +19,57 @@ namespace SignOfSilenceVR
 
         public static void SpawnHands()
         {
-            var parent = (CameraManager.LocalPlayer) ?
-                    CameraManager.cameraParent.transform : Camera.main.transform.parent.transform;
-            Logs.WriteWarning(parent.ToString());
-            if (!RightHand)
+            var parentUpdate = getCamera();
+            if (parentUpdate && parentUpdate != parent)
             {
-                RightHand = Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector,
-                    Quaternion.identityQuaternion);
-                RightHand.transform.parent = parent;
-                RightHand.transform.position = parent.position;
-                RightHand.transform.localPosition = Vector3.zero;
-                RightHand.transform.localRotation = Quaternion.identity;
-                RightHand.transform.localScale = Vector3.one;
-                RightHand.AddComponent<Pointer>();
+                parent = parentUpdate;
+                createHands();
             }
+        }
 
-            if (!LeftHand)
+        public static Transform getCamera()
+        {
+            if (CameraManager.cameraParent)
             {
-                 LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
-                     Quaternion.identityQuaternion);
-                LeftHand.transform.parent = parent;
-                LeftHand.transform.position = parent.position;
-                LeftHand.transform.localPosition = Vector3.zero;
-                LeftHand.transform.localRotation = Quaternion.identity;
-                LeftHand.transform.localScale = Vector3.one;
-                LeftHand.AddComponent<Pointer>();
+                showModel = false;
+                showPointer = false;
+                return CameraManager.cameraParent.transform;
             }
+            if (Camera.main)
+            {
+                showPointer = true;
+                showModel = true;
+                return Camera.main.transform.parent.transform;
+            }
+            return null;
+        }
+
+        public static void createHands()
+        {
+            RightHand = Instantiate(AssetLoader.RightHandBase, Vector3.zeroVector,
+                Quaternion.identityQuaternion);
+            RightHand.transform.parent = parent;
+            RightHand.transform.position = parent.position;
+            RightHand.transform.localPosition = Vector3.zero;
+            RightHand.transform.localRotation = Quaternion.identity;
+            RightHand.transform.localScale = Vector3.one;
+            RightHand.AddComponent<Pointer>().gameObject.SetActive(showPointer);
+
+            LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
+                Quaternion.identityQuaternion);
+            LeftHand.transform.parent = parent;
+            LeftHand.transform.position = parent.position;
+            LeftHand.transform.localPosition = Vector3.zero;
+            LeftHand.transform.localRotation = Quaternion.identity;
+            LeftHand.transform.localScale = Vector3.one;
+            LeftHand.AddComponent<Pointer>().gameObject.SetActive(showPointer);
+        }
+
+        public static void OnDestroy()
+        {
+            RightHand = null;
+            LeftHand = null;
+            parent = null;
         }
     }
 }

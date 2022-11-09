@@ -26,11 +26,7 @@ namespace SignOfSilenceVR
             InitSteamVR();
             gameObject.AddComponent<UIPatches>();
             gameObject.AddComponent<CameraManager>();
-        }
-
-        private void LateUpdate()
-        {
-
+            gameObject.AddComponent<VRHands>();
         }
 
         private static void InitSteamVR()

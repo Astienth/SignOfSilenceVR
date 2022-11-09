@@ -16,7 +16,8 @@ namespace SignOfSilenceVR
             m_lineRenderer.startWidth = 0.005f;
             m_lineRenderer.endWidth = 0.001f;
             m_lineRenderer.endColor = new Color(1, 1, 1, 0.3f);
-            m_lineRenderer.startColor = Color.clear;
+            m_lineRenderer.startColor = Color.white;
+            m_lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
         }
 
         private void Update()
