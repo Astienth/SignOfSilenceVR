@@ -42,20 +42,27 @@ namespace SignOfSilenceVR
 
                 if (canvas && !patchedCanvases.Contains(canvas))
                 {
-                    AdjustScaler(canvas);
                     if (SceneManager.GetActiveScene().name == "menu")
                     {
+                        /*
                         var target = new GameObject("TitleScreen");
                         target.transform.position = new Vector3(903.6f, 64.2f, 230.3f);
                         target.transform.rotation = Quaternion.Euler(0, 69, 0);
+                        AdjustScaler(canvas);
                         AttachedUi.Create<AttachedUi>(canvas, target.transform, 0.0015f);
                         patchedCanvases.Add(canvas);
+                        */
                     }
                     else
                     {
                         if (CameraManager.LocalPlayer != null)
                         {
-                            AttachedUi.Create<AttachedUi>(canvas, CameraManager.LocalPlayer.transform, 0.0015f);
+                            var target = new GameObject("PlayerHeadUI");
+                            target.transform.parent = CameraManager.playerCamera.transform;
+                            target.transform.localPosition = new Vector3(0, 0, 2);
+                            target.transform.rotation = Quaternion.identity;
+                            AdjustScaler(canvas);
+                            AttachedUi.Create<AttachedUi>(canvas, target.transform, 0.0015f);
                             patchedCanvases.Add(canvas);
                         }
                     }
