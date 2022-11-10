@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SignOfSilenceVR
 {
@@ -12,6 +13,7 @@ namespace SignOfSilenceVR
         private void Awake()
         {
             gameObject.AddComponent<LineRenderer>();
+            gameObject.layer = LayerMask.NameToLayer("UI");
             m_lineRenderer = GetComponent<LineRenderer>();
             m_lineRenderer.startWidth = 0.005f;
             m_lineRenderer.endWidth = 0.001f;

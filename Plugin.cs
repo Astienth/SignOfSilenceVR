@@ -24,7 +24,7 @@ namespace SignOfSilenceVR
             new AssetLoader();
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             InitSteamVR();
-            //gameObject.AddComponent<UIPatches>();
+            gameObject.AddComponent<UIManager>();
             gameObject.AddComponent<CameraManager>();
             gameObject.AddComponent<VRHands>();
         }

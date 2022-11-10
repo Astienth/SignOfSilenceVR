@@ -9,38 +9,39 @@ namespace SignOfSilenceVR
 {
     class AttachedUi : MonoBehaviour
     {
-        public bool followHead = true;
+        private Transform targetTransform;
 
-        public static void Create<TAttachedUi>(Canvas canvas, float scale = 0)
+        public static void Create<TAttachedUi>(Canvas canvas, Transform target, float scale = 0)
             where TAttachedUi : AttachedUi
         {
-            canvas.gameObject.AddComponent<TAttachedUi>();
+            var instance = canvas.gameObject.AddComponent<TAttachedUi>();
             if (scale > 0) canvas.transform.localScale = Vector3.one * scale;
             canvas.renderMode = RenderMode.WorldSpace;
+
+            instance.targetTransform = target;
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
-            if (followHead)
+            if (!targetTransform)
             {
-                UpdateTransform();
+                Logs.WriteWarning($"Target transform for AttachedUi {name} is missing, destroying");
+                Destroy(this);
+                return;
             }
+
+            UpdateTransform();
         }
 
-        public void setPosition(Vector3 position, Quaternion rotation)
+        public void SetTargetTransform(Transform target)
         {
-            transform.position = position;
-            transform.rotation = rotation;
+            targetTransform = target;
         }
 
         private void UpdateTransform()
         {
-            if (Donteco.MainCameraCached.Current)
-            {
-                transform.position = Donteco.MainCameraCached.Current.transform.position
-                    + Donteco.MainCameraCached.Current.transform.forward;
-                transform.rotation = Donteco.MainCameraCached.Current.transform.rotation;
-            }
+            transform.position = targetTransform.position;
+            transform.rotation = targetTransform.rotation;
         }
     }
 }

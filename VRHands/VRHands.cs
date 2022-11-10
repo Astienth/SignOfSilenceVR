@@ -79,7 +79,8 @@ namespace SignOfSilenceVR
                     var spotlight = CameraManager.cameraParent.Find("Head")
                         .transform.Find("Spotlight").transform;
                     spotlight.parent = RightHand.transform;
-                    spotlight.eulerAngles = new Vector3(35, 345, 0);
+                    spotlight.localPosition = Vector3.zero;
+                    spotlight.eulerAngles = new Vector3(35, 0, 0);
                 }
             }
         }
