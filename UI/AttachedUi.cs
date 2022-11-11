@@ -6,7 +6,6 @@ namespace SignOfSilenceVR
     public class AttachedUi : MonoBehaviour
     {
         private Transform targetTransform;
-        public Canvas canvas;
         public float m_scale = 0;
         public Canvas m_canvas;
         private BoxCollider collider;
@@ -33,7 +32,6 @@ namespace SignOfSilenceVR
                 Destroy(this);
                 return;
             }
-
             UpdateTransform();
         }
 

@@ -54,7 +54,7 @@ namespace SignOfSilenceVR
             RightHand.transform.localPosition = Vector3.zero;
             RightHand.transform.localRotation = Quaternion.identity;
             RightHand.transform.localScale = Vector3.one;
-            if (showPointer) RightHand.AddComponent<Pointer>();
+            if (showPointer) VrLaser.Create(RightHand.transform);
             RightHand.transform.Find("Model").gameObject.SetActive(showModel);
 
             LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
