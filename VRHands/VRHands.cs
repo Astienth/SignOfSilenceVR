@@ -64,7 +64,7 @@ namespace SignOfSilenceVR
             LeftHand.transform.localPosition = Vector3.zero;
             LeftHand.transform.localRotation = Quaternion.identity;
             LeftHand.transform.localScale = Vector3.one;
-            if (showPointer) LeftHand.AddComponent<Pointer>();
+            //if (showPointer) LeftHand.AddComponent<Pointer>();
             LeftHand.transform.Find("Model").gameObject.SetActive(showModel);
         }
 

@@ -17,10 +17,10 @@ namespace SignOfSilenceVR
         {
             base.Awake();
             m_Data = new PointerEventData(eventSystem);
-            eventCamera = Camera.main;
+            //eventCamera = gameObject.GetComponent<Camera>();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             Process();
         }
@@ -33,7 +33,12 @@ namespace SignOfSilenceVR
             eventSystem.RaycastAll(m_Data, m_RaycastResultCache);
             m_Data.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
             m_CurrentGameObject = m_Data.pointerCurrentRaycast.gameObject;
-            
+            foreach (RaycastResult r in m_RaycastResultCache)
+            {
+                if (m_CurrentGameObject != null)
+                    Logs.WriteWarning("EVENT " + r.gameObject.name);
+            }
+
             m_RaycastResultCache.Clear();
 
             //hover

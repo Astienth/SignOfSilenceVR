@@ -14,7 +14,10 @@ namespace SignOfSilenceVR
         {
             gameObject.AddComponent<LineRenderer>();
             gameObject.AddComponent<VRPointerInput>();
+            var cam = gameObject.AddComponent<Camera>();
+            gameObject.GetComponent<Camera>().enabled = false;
             m_pointerInput = gameObject.GetComponent<VRPointerInput>();
+            m_pointerInput.eventCamera = cam;
             gameObject.layer = LayerMask.NameToLayer("UI");
             m_lineRenderer = GetComponent<LineRenderer>();
             m_lineRenderer.startWidth = 0.005f;
@@ -48,7 +51,7 @@ namespace SignOfSilenceVR
         {
             RaycastHit hit;
             Ray ray = new Ray(transform.position, transform.forward);
-            Physics.Raycast(ray, out hit, length);
+            Physics.Raycast(ray, out hit, length, LayerMask.GetMask("UI"));
             return hit;
         }
     }
