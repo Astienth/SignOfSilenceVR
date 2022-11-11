@@ -6,21 +6,23 @@ namespace SignOfSilenceVR
     public class AttachedUi : MonoBehaviour
     {
         private Transform targetTransform;
+        public Canvas canvas;
+        public float m_scale = 0;
+        public Canvas m_canvas;
+        private BoxCollider collider;
+        public float localScale = 0.001f;
 
-        public static void Create<TAttachedUi>(Canvas canvas, Transform target, float scale = 0)
-            where TAttachedUi : AttachedUi
+        private void Awake()
         {
-            var instance = canvas.gameObject.AddComponent<TAttachedUi>();
-            if (scale > 0) canvas.transform.localScale = Vector3.one * scale;
-            canvas.renderMode = RenderMode.WorldSpace;
-
-            instance.targetTransform = target;
+            m_canvas = gameObject.GetComponent<Canvas>();
+            if (m_scale > 0) m_canvas.transform.localScale = Vector3.one * m_scale;
+            m_canvas.renderMode = RenderMode.WorldSpace;
         }
 
         private void Start()
         {
-            SetupInteractableCanvasCollider();
-            AdjustScaler(canvas);
+            SetUpCollider();
+            AdjustScaler();
         }
 
         protected virtual void Update()
@@ -35,6 +37,11 @@ namespace SignOfSilenceVR
             UpdateTransform();
         }
 
+        public void SetScale(float scale)
+        {
+            m_scale = scale;
+        }
+
         public void SetTargetTransform(Transform target)
         {
             targetTransform = target;
@@ -46,32 +53,28 @@ namespace SignOfSilenceVR
             transform.rotation = targetTransform.rotation;
         }
 
-        private static void SetupInteractableCanvasCollider(Canvas canvas, GameObject proxy = null)
+        private void SetUpCollider()
         {
-            if (proxy == null) proxy = canvas.gameObject;
-            var collider = proxy.GetComponent<BoxCollider>();
-            if (collider == null)
-            {
-                var rectTransform = canvas.GetComponent<RectTransform>();
-                var thickness = 0.1f;
-                collider = proxy.gameObject.AddComponent<BoxCollider>();
-                collider.size = rectTransform.sizeDelta;
-                collider.center = new Vector3(0, 0, thickness * 0.5f);
-                proxy.layer = LayerMask.NameToLayer("UI");
-                canvas.worldCamera = Camera.main;
-            }
+            collider = gameObject.GetComponent<BoxCollider>();
+            if (collider != null) return;
+
+            var rectTransform = gameObject.GetComponent<RectTransform>();
+            collider = gameObject.gameObject.AddComponent<BoxCollider>();
+            var rectSize = rectTransform.sizeDelta;
+            collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
+            gameObject.layer = LayerMask.NameToLayer("UI");
         }
 
-        private static void AdjustScaler(Canvas canvas, float localScale = 0.001f)
+        private void AdjustScaler()
         {
-            var scaler = canvas.GetComponent<CanvasScaler>();
+            var scaler = m_canvas.GetComponent<CanvasScaler>();
             if (scaler != null)
             {
                 scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
                 scaler.scaleFactor = 1;
                 scaler.referencePixelsPerUnit = 100;
             }
-            canvas.transform.localScale = Vector3.one * localScale;
+            m_canvas.transform.localScale = Vector3.one * localScale;
         }
     }
 }

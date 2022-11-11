@@ -9,13 +9,9 @@ namespace SignOfSilenceVR
         public float m_defaultLength = 5.0f;
         public LineRenderer m_lineRenderer = null;
         public VRPointerInput m_pointerInput;
-        public Camera m_camera;
 
         private void Awake()
         {
-            gameObject.AddComponent<Camera>();
-            m_camera = gameObject.GetComponent<Camera>();
-            m_camera.enabled = false;
             gameObject.AddComponent<LineRenderer>();
             gameObject.AddComponent<VRPointerInput>();
             m_pointerInput = gameObject.GetComponent<VRPointerInput>();

@@ -17,7 +17,12 @@ namespace SignOfSilenceVR
         {
             base.Awake();
             m_Data = new PointerEventData(eventSystem);
-            eventCamera = transform.parent.GetComponent<Camera>();
+            eventCamera = Camera.main;
+        }
+
+        private void Update()
+        {
+            Process();
         }
 
         public override void Process()
