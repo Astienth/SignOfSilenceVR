@@ -36,6 +36,11 @@ public class LaserInputModule : BaseInputModule
         return pointerData != null && pointerData.pointerEnter != null;
     }
 
+    private void Update()
+    {
+        Process();
+    }
+
     public override void Process()
     {
         if (!EventCamera) return;
@@ -78,7 +83,14 @@ public class LaserInputModule : BaseInputModule
         pointerData.Reset();
         pointerData.position = pointerPosition;
         eventSystem.RaycastAll(pointerData, m_RaycastResultCache);
-        pointerData.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
+        foreach(RaycastResult r in m_RaycastResultCache)
+        {
+            if (r.gameObject != null)
+            {
+                Logs.WriteWarning("RAYCAST RESULT " + r.gameObject.name);
+            }
+        }
+            pointerData.pointerCurrentRaycast = FindFirstRaycast(m_RaycastResultCache);
         m_RaycastResultCache.Clear();
         pointerData.delta = pointerPosition - lastHeadPose;
         lastHeadPose = hit.point;
