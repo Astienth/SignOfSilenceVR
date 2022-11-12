@@ -99,6 +99,15 @@ namespace SignOfSilenceVR
                 //hide head
                 hideHead();
             }
+            else
+            {
+                cameraParent = new GameObject("VrCameraParent").transform;
+                cameraParent.parent = Camera.main.transform.parent;
+                cameraParent.position = Camera.main.transform.position;
+                cameraParent.rotation = Camera.main.transform.rotation;
+                cameraParent.localRotation = Quaternion.identity;
+                Camera.main.transform.parent = cameraParent;
+            }
         }
 
         //trying to implement a way to move virtual player

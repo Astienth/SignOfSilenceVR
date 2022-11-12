@@ -12,9 +12,9 @@ public class VrLaser : MonoBehaviour
     public SteamVR_Action_Boolean m_clickAction = SteamVR_Actions.default_confirm;
     private bool ignoreNextInput;
 
-    private LaserInputModule inputModule;
+    public LaserInputModule inputModule;
     private LineRenderer lineRenderer;
-    private Vector3? target;
+    private Vector3? target = null;
 
     public static VrLaser Create(Transform dominantHand)
     {
@@ -28,7 +28,6 @@ public class VrLaser : MonoBehaviour
     public void SetUp(Camera camera)
     {
         inputModule.EventCamera = camera;
-        target = null;
     }
 
     private void Start()
@@ -55,6 +54,8 @@ public class VrLaser : MonoBehaviour
 
     public void SetTarget(Vector3? newTarget)
     {
+        Logs.WriteWarning("TARGET LASER " + target.ToString());
+        Logs.WriteWarning("TARGET LASER NEW " + newTarget.ToString());
         target = newTarget;
     }
 
