@@ -43,7 +43,12 @@ public class LaserInputModule : BaseInputModule
 
     public override void Process()
     {
-        if (!EventCamera) return;
+        Logs.WriteInfo("PROCESS");
+        if (!EventCamera)
+        {
+            Logs.WriteInfo("RETURNING");
+            return;
+        }
 
         CastRay();
         UpdateCurrentObject();
@@ -66,6 +71,8 @@ public class LaserInputModule : BaseInputModule
             rayDistance,
             LayerMask.GetMask("UI"));
 
+        Logs.WriteInfo("IS HIT "+isHit);
+
         if (isHit)
             vrLaser.SetTarget(hit.point);
         else
@@ -83,6 +90,7 @@ public class LaserInputModule : BaseInputModule
         pointerData.Reset();
         pointerData.position = pointerPosition;
         eventSystem.RaycastAll(pointerData, m_RaycastResultCache);
+
         foreach(RaycastResult r in m_RaycastResultCache)
         {
             if (r.gameObject != null)

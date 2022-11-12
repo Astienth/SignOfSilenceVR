@@ -61,7 +61,6 @@ namespace SignOfSilenceVR
             var rectSize = rectTransform.sizeDelta;
             collider.size = new Vector3(rectSize.x, rectSize.y, 0.1f);
             gameObject.layer = LayerMask.NameToLayer("UI");
-            m_canvas.gameObject.layer = LayerMask.NameToLayer("UI");
         }
 
         private void AdjustScaler()

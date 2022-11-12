@@ -11,10 +11,16 @@ namespace SignOfSilenceVR
         public static Transform parent;
         public static bool showPointer = false;
         public static bool showModel = false;
+        public static VrLaser vrLaser = null;
 
         private void Update()
         {
             SpawnHands();
+            
+            if (getCamera())
+            {
+                vrLaser.SetUp(Camera.main);
+            }
         }
 
         public static void SpawnHands()
@@ -34,13 +40,13 @@ namespace SignOfSilenceVR
             {
                 showModel = false;
                 showPointer = false;
-                return CameraManager.cameraParent.transform;
+                return CameraManager.cameraParent;
             }
             if (Camera.main)
             {
                 showPointer = true;
                 showModel = true;
-                return Camera.main.transform.parent.transform;
+                return Camera.main.transform;
             }
             return null;
         }
@@ -54,7 +60,10 @@ namespace SignOfSilenceVR
             RightHand.transform.localPosition = Vector3.zero;
             RightHand.transform.localRotation = Quaternion.identity;
             RightHand.transform.localScale = Vector3.one;
-            if (showPointer) VrLaser.Create(RightHand.transform);
+            if (showPointer)
+            {
+                vrLaser = VrLaser.Create(RightHand.transform);
+            }
             RightHand.transform.Find("Model").gameObject.SetActive(showModel);
 
             LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,

@@ -25,9 +25,9 @@ public class VrLaser : MonoBehaviour
         return instance;
     }
 
-    public void setCamera()
+    public void SetUp(Camera camera)
     {
-        inputModule.EventCamera = VRHands.getCamera().GetComponent<Camera>();
+        inputModule.EventCamera = camera;
         target = null;
     }
 
@@ -45,7 +45,6 @@ public class VrLaser : MonoBehaviour
         lineRenderer.enabled = false;
 
         inputModule = LaserInputModule.Create(this);
-        setCamera();
     }
 
     private void Update()
