@@ -17,54 +17,57 @@ namespace SignOfSilenceVR
         };
         private readonly List<GameObject> canvasesToDisable = new List<GameObject>();
 
-        private void Start()
+        private void Update()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            initMainCanvas();
         }
 
-        public static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        public void initMainCanvas()
         {
-            initCanvases();
-        }
-
-        public static void initCanvases()
-        {
-            var canvases = Resources.FindObjectsOfTypeAll<Canvas>();
-            foreach (var canvas in canvases)
+            //title screen
+            if (SceneManager.GetActiveScene().name == "menu")
             {
-                if (IsCanvasToIgnore(canvas.name))
+                /*
+                var target = new GameObject("TitleScreen");
+                target.transform.position = new Vector3(903.6f, 64.2f, 230.3f);
+                target.transform.rotation = Quaternion.Euler(0, 69, 0);
+                var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                ui.SetTargetTransform(target.transform);
+                ui.SetScale(0.0015f);
+                patchedCanvases.Add(canvas);
+                */
+            }
+            //Player UI
+            if (GameObject.Find("PlayerUI/CanvasMain") && CameraManager.playerCamera)
+            {
+                var canvas = GameObject.Find("PlayerUI/CanvasMain").GetComponent<Canvas>();
+                if (!patchedCanvases.Contains(canvas) && CameraManager.LocalPlayer != null)
                 {
-                    continue;
+                    var target = new GameObject("PlayerHeadUI");
+                    target.transform.parent = CameraManager.playerCamera.transform;
+                    target.transform.localPosition = new Vector3(0, 0, 2);
+                    //target.transform.rotation = Quaternion.identity;
+                    var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                    ui.SetTargetTransform(target.transform);
+                    ui.SetScale(0.0015f);
+                    patchedCanvases.Add(canvas);
                 }
-
-                if (canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
-
-                if (canvas && !patchedCanvases.Contains(canvas))
+            }
+            //Loading screen
+            if (GameObject.Find("LoadingScreen/View/Canvas") && Camera.main)
+            {
+                var canvas = GameObject.Find("PlayerUI/CanvasMain").GetComponent<Canvas>();
+                if (!patchedCanvases.Contains(canvas))
                 {
-                    if (SceneManager.GetActiveScene().name == "menu")
-                    {
-                        var target = new GameObject("TitleScreen");
-                        target.transform.position = new Vector3(903.6f, 64.2f, 230.3f);
-                        target.transform.rotation = Quaternion.Euler(0, 69, 0);
-                        var ui = canvas.gameObject.AddComponent<AttachedUi>();
-                        ui.SetTargetTransform(target.transform);
-                        ui.SetScale(0.0015f);
-                        patchedCanvases.Add(canvas);
-                    }
-                    else
-                    {
-                        if (CameraManager.LocalPlayer != null)
-                        {
-                            var target = new GameObject("PlayerHeadUI");
-                            target.transform.parent = CameraManager.playerCamera.transform;
-                            target.transform.localPosition = new Vector3(0, 0, 2);
-                            //target.transform.rotation = Quaternion.identity;
-                            var ui = canvas.gameObject.AddComponent<AttachedUi>();
-                            ui.SetTargetTransform(target.transform);
-                            ui.SetScale(0.0015f);
-                            patchedCanvases.Add(canvas);
-                        }
-                    }
+                    var target = new GameObject("LoadingScreenUI");
+                    target.transform.parent = Camera.main.transform;
+                    target.transform.localPosition = new Vector3(0, 0, 2);
+                    //target.transform.rotation = Quaternion.identity;
+                    var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                    ui.updatePosition = false;
+                    ui.SetTargetTransform(target.transform);
+                    ui.SetScale(0.0015f);
+                    patchedCanvases.Add(canvas);
                 }
             }
         }

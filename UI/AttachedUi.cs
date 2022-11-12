@@ -10,6 +10,7 @@ namespace SignOfSilenceVR
         public Canvas m_canvas;
         private BoxCollider collider;
         public float localScale = 0.001f;
+        public bool updatePosition = true;
 
         private void Awake()
         {
@@ -32,7 +33,10 @@ namespace SignOfSilenceVR
                 Destroy(this);
                 return;
             }
-            UpdateTransform();
+            if (updatePosition)
+            {
+                UpdateTransform();
+            }
         }
 
         public void SetScale(float scale)

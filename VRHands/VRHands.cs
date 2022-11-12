@@ -57,17 +57,13 @@ namespace SignOfSilenceVR
                 Quaternion.identityQuaternion);
             RightHand.transform.parent = parent;
             RightHand.transform.localScale = Vector3.one;
-            if (showPointer)
-            {
-                vrLaser = VrLaser.Create(RightHand.transform);
-            }
+            vrLaser = VrLaser.Create(RightHand.transform);
             RightHand.transform.Find("Model").gameObject.SetActive(showModel);
 
             LeftHand = Instantiate(AssetLoader.LeftHandBase, Vector3.zeroVector,
                 Quaternion.identityQuaternion);
             LeftHand.transform.parent = parent;
             LeftHand.transform.localScale = Vector3.one;
-            //if (showPointer) LeftHand.AddComponent<Pointer>();
             LeftHand.transform.Find("Model").gameObject.SetActive(showModel);
         }
 
