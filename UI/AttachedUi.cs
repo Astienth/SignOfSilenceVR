@@ -11,8 +11,8 @@ namespace SignOfSilenceVR
         private BoxCollider collider;
         public float localScale = 0.001f;
         public bool updatePosition = true;
-        public bool updateOnce = false;
-        public bool firstUpdate = false;
+        public float speedTransform = 4f;
+        public bool updateCrouch = false;
 
         private void Awake()
         {
@@ -35,10 +35,8 @@ namespace SignOfSilenceVR
                 Destroy(this);
                 return;
             }
-            if (updatePosition)
-            {
-                UpdateTransform();
-            }
+            UpdateTransform();
+            if (updateCrouch) updateCrouched();
         }
 
         public void SetScale(float scale)
@@ -51,15 +49,43 @@ namespace SignOfSilenceVR
             targetTransform = target;
         }
 
+        private void updateCrouched()
+        {
+            switch(CameraManager.getCrouchState())
+            {
+                case 0:
+                    targetTransform.localPosition = 
+                    Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 0.7f, 1),
+                    Time.deltaTime * 4f);
+                    break;
+                case 1:
+                    targetTransform.localPosition = 
+                        Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 0.9f, 1.2f),
+                        Time.deltaTime * 4f);
+                    break;
+                case 2:
+                    targetTransform.localPosition = 
+                        Vector3.Lerp(targetTransform.localPosition,new Vector3(0, 2, 1),
+                        Time.deltaTime * 4f);
+                    break;
+                default:
+                    targetTransform.localPosition =
+                        Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 2, 1),
+                        Time.deltaTime * 4f);
+                    break;
+            }
+        }
+
         private void UpdateTransform()
         {
-            if (!updatePosition || (firstUpdate && updateOnce))
+            if (!updatePosition)
             {
                 return;
             }
-            gameObject.transform.position = targetTransform.position;
-            gameObject.transform.rotation = targetTransform.rotation;
-            firstUpdate = true;
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
+                targetTransform.position, Time.deltaTime * speedTransform);
+            gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation,
+                targetTransform.rotation, Time.deltaTime * speedTransform);
         }
 
         private void SetUpCollider()

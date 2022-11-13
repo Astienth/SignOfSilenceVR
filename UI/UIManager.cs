@@ -33,11 +33,11 @@ namespace SignOfSilenceVR
             {
                 var canvas = GameObject.Find("UI/Canvas")?.GetComponent<Canvas>();
                 var target = new GameObject("TitleScreen");
-                target.transform.position = new Vector3(903.6f, 64.2f, 230.3f);
-                target.transform.rotation = Quaternion.Euler(0, 69, 0);
+                target.transform.position = new Vector3(902.6f, 64.4f, 230.2f);
+                target.transform.rotation = Quaternion.Euler(0, 58f, 0);
                 var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                ui.speedTransform = 50;
                 ui.SetTargetTransform(target.transform);
-                ui.updateOnce = true;
                 ui.SetScale(0.0015f);
                 patchedCanvases.Add(canvas.name);
             }
@@ -45,17 +45,17 @@ namespace SignOfSilenceVR
             if (CameraManager.playerCamera && CameraManager.LocalPlayer != null)
             {
                 var canvas = GameObject.Find("PlayerUI/CanvasMain")?.GetComponent<Canvas>();
-                Logs.WriteWarning("CANVAS FOUND ? "+ patchedCanvases.Contains(canvas.name));
                 if (canvas && !patchedCanvases.Contains(canvas.name) )
                 {
                     var target = new GameObject("PlayerHeadUI");
-                    Logs.WriteWarning("CANVAS UI POSITION");
                     target.transform.parent = CameraManager.LocalPlayer.transform;
-                    target.transform.localPosition = new Vector3(0, 1, 1);
+                    target.transform.localPosition = new Vector3(0, 2, 1);
                     //target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                    ui.updateCrouch = true;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
+                    fixPlayerUI(canvas);
                     patchedCanvases.Add(canvas.name);
                 }
             }
@@ -68,15 +68,19 @@ namespace SignOfSilenceVR
                 {
                     var target = new GameObject("LoadingScreenUI");
                     target.transform.parent = Camera.main.transform;
-                    target.transform.localPosition = new Vector3(0, 0, 2);
+                    target.transform.localPosition = new Vector3(0, 1, 2);
                     //target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
-                    ui.updateOnce = true;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
                     patchedCanvases.Add(canvas.name);
                 }
             }
+        }
+
+        public void fixPlayerUI(Canvas canvas)
+        {
+            
         }
 
         private static bool IsCanvasToIgnore(string canvasName)

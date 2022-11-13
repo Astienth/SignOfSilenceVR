@@ -52,7 +52,7 @@ namespace SignOfSilenceVR
             cameraParent.position = Vector3.Lerp(
                 cameraParent.position,
                 cameraParent.position - offsetPos,
-                Time.deltaTime * 2
+                Time.deltaTime * 4f
             );
         }
 

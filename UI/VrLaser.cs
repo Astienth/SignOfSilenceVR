@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Valve.VR;
+using Donteco;
 
 namespace SignOfSilenceVR;
 
@@ -48,7 +50,6 @@ public class VrLaser : MonoBehaviour
 
     private void Update()
     {
-        UpdateLaserVisibility();
         UpdateLaserTarget();
     }
 
@@ -57,7 +58,7 @@ public class VrLaser : MonoBehaviour
         target = newTarget;
     }
 
-    private void UpdateLaserTarget()
+    public void UpdateLaserTarget()
     {
         lineRenderer.SetPosition(1,
             target != null
@@ -65,9 +66,32 @@ public class VrLaser : MonoBehaviour
                 : Vector3.forward * laserLength);
     }
 
-    private void UpdateLaserVisibility()
+    public void UpdateLaserVisibility(bool enabled, GameObject target)
     {
-        //TODO CHECK WHEN LINE RENDERER CAN BE ACTIVE
+        if(!enabled)
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+        /*
+        if(target && target.transform.Find("Hearts"))
+        {
+            Logs.WriteWarning("TARGET NAME "+target.name);
+            Logs.WriteWarning("HEARTS FOUND");
+            if (ElementUIHelper.IsFullyVisibleFrom(
+                target.transform.Find("Hearts").GetComponent<RectTransform>(),
+                VRHands.getCamera().GetComponent<Camera>()))
+            {
+
+                Logs.WriteWarning("HEARTS IN VIEW");
+                lineRenderer.enabled = false;
+                return;
+            }
+            Logs.WriteWarning("HEARTS HIDDEN");
+            lineRenderer.enabled = true;
+            return;
+        }
+        */
         lineRenderer.enabled = true;
     }
 

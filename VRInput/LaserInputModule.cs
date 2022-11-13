@@ -70,8 +70,6 @@ public class LaserInputModule : BaseInputModule
             rayDistance,
             LayerMask.GetMask("UI"));
 
-        Logs.WriteInfo("IS HIT "+isHit);
-
         if (isHit)
         {
             vrLaser.SetTarget(hit.point);
@@ -80,6 +78,8 @@ public class LaserInputModule : BaseInputModule
         {
             vrLaser.SetTarget(null);
         }
+        vrLaser.UpdateLaserVisibility(isHit, (isHit)? hit.transform.gameObject : null);
+
         var pointerPosition = EventCamera.WorldToScreenPoint(hit.point);
 
         if (pointerData == null)
