@@ -54,8 +54,6 @@ public class VrLaser : MonoBehaviour
 
     public void SetTarget(Vector3? newTarget)
     {
-        Logs.WriteWarning("TARGET LASER " + target.ToString());
-        Logs.WriteWarning("TARGET LASER NEW " + newTarget.ToString());
         target = newTarget;
     }
 

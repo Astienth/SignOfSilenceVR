@@ -11,6 +11,8 @@ namespace SignOfSilenceVR
         private BoxCollider collider;
         public float localScale = 0.001f;
         public bool updatePosition = true;
+        public bool updateOnce = false;
+        public bool firstUpdate = false;
 
         private void Awake()
         {
@@ -51,8 +53,13 @@ namespace SignOfSilenceVR
 
         private void UpdateTransform()
         {
-            transform.position = targetTransform.position;
-            transform.rotation = targetTransform.rotation;
+            if (!updatePosition || (firstUpdate && updateOnce))
+            {
+                return;
+            }
+            gameObject.transform.position = targetTransform.position;
+            gameObject.transform.rotation = targetTransform.rotation;
+            firstUpdate = true;
         }
 
         private void SetUpCollider()

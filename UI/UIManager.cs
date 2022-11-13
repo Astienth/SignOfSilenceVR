@@ -8,16 +8,20 @@ namespace SignOfSilenceVR
 {
     class UIManager : MonoBehaviour
     {
-        private static readonly List<Canvas> patchedCanvases = new List<Canvas>();
+        private static readonly List<string> patchedCanvases = new List<string>();
         private static readonly string[] canvasesToIgnore =
         {
                 "com.sinai.unityexplorer_Root", // Unity Explorer
                 "com.sinai.universelib.resizeCursor_Root",
                 "com.sinai.unityexplorer.MouseInspector_Root"
         };
-        private readonly List<GameObject> canvasesToDisable = new List<GameObject>();
 
-        private void Update()
+        private void Awake()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             initMainCanvas();
         }
@@ -27,47 +31,50 @@ namespace SignOfSilenceVR
             //title screen
             if (SceneManager.GetActiveScene().name == "menu")
             {
-                /*
+                var canvas = GameObject.Find("UI/Canvas")?.GetComponent<Canvas>();
                 var target = new GameObject("TitleScreen");
                 target.transform.position = new Vector3(903.6f, 64.2f, 230.3f);
                 target.transform.rotation = Quaternion.Euler(0, 69, 0);
                 var ui = canvas.gameObject.AddComponent<AttachedUi>();
                 ui.SetTargetTransform(target.transform);
+                ui.updateOnce = true;
                 ui.SetScale(0.0015f);
-                patchedCanvases.Add(canvas);
-                */
+                patchedCanvases.Add(canvas.name);
             }
             //Player UI
-            if (GameObject.Find("PlayerUI/CanvasMain") && CameraManager.playerCamera)
+            if (CameraManager.playerCamera && CameraManager.LocalPlayer != null)
             {
-                var canvas = GameObject.Find("PlayerUI/CanvasMain").GetComponent<Canvas>();
-                if (!patchedCanvases.Contains(canvas) && CameraManager.LocalPlayer != null)
+                var canvas = GameObject.Find("PlayerUI/CanvasMain")?.GetComponent<Canvas>();
+                Logs.WriteWarning("CANVAS FOUND ? "+ patchedCanvases.Contains(canvas.name));
+                if (canvas && !patchedCanvases.Contains(canvas.name) )
                 {
                     var target = new GameObject("PlayerHeadUI");
-                    target.transform.parent = CameraManager.playerCamera.transform;
-                    target.transform.localPosition = new Vector3(0, 0, 2);
+                    Logs.WriteWarning("CANVAS UI POSITION");
+                    target.transform.parent = CameraManager.LocalPlayer.transform;
+                    target.transform.localPosition = new Vector3(0, 1, 1);
                     //target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
-                    patchedCanvases.Add(canvas);
+                    patchedCanvases.Add(canvas.name);
                 }
             }
+            
             //Loading screen
-            if (GameObject.Find("LoadingScreen/View/Canvas") && Camera.main)
+            if (Camera.main)
             {
-                var canvas = GameObject.Find("PlayerUI/CanvasMain").GetComponent<Canvas>();
-                if (!patchedCanvases.Contains(canvas))
+                var canvas = GameObject.Find("LoadingScreen/View/Canvas")?.GetComponent<Canvas>();
+                if (canvas && !patchedCanvases.Contains(canvas.name))
                 {
                     var target = new GameObject("LoadingScreenUI");
                     target.transform.parent = Camera.main.transform;
                     target.transform.localPosition = new Vector3(0, 0, 2);
                     //target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
-                    ui.updatePosition = false;
+                    ui.updateOnce = true;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
-                    patchedCanvases.Add(canvas);
+                    patchedCanvases.Add(canvas.name);
                 }
             }
         }
