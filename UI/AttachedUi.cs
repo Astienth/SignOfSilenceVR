@@ -56,23 +56,23 @@ namespace SignOfSilenceVR
             {
                 case 0:
                     targetTransform.localPosition = 
-                    Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 0.7f, 1),
-                    Time.deltaTime * 4f);
+                    Vector3.Lerp(targetTransform.localPosition, UIManager.crouchingUI,
+                    Time.deltaTime * speedTransform);
                     break;
                 case 1:
                     targetTransform.localPosition = 
-                        Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 0.9f, 1.2f),
-                        Time.deltaTime * 4f);
+                        Vector3.Lerp(targetTransform.localPosition, UIManager.crouchmovingUI,
+                        Time.deltaTime * speedTransform);
                     break;
                 case 2:
                     targetTransform.localPosition = 
-                        Vector3.Lerp(targetTransform.localPosition,new Vector3(0, 2, 1),
-                        Time.deltaTime * 4f);
+                        Vector3.Lerp(targetTransform.localPosition, UIManager.standingUI,
+                        Time.deltaTime * speedTransform);
                     break;
                 default:
                     targetTransform.localPosition =
-                        Vector3.Lerp(targetTransform.localPosition, new Vector3(0, 2, 1),
-                        Time.deltaTime * 4f);
+                        Vector3.Lerp(targetTransform.localPosition, UIManager.standingUI,
+                        Time.deltaTime * speedTransform);
                     break;
             }
         }

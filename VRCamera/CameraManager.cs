@@ -10,6 +10,7 @@ namespace SignOfSilenceVR
         public static GameObject LocalPlayer = null;
         public static Camera playerCamera = null;
         public static Transform cameraParent;
+        public static float speedTransform = 6f;
 
         private void Start()
         {
@@ -52,7 +53,7 @@ namespace SignOfSilenceVR
             cameraParent.position = Vector3.Lerp(
                 cameraParent.position,
                 cameraParent.position - offsetPos,
-                Time.deltaTime * 4f
+                Time.deltaTime * speedTransform
             );
         }
 

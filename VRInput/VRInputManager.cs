@@ -25,14 +25,14 @@ namespace SignOfSilenceVR
             //SteamVR_Actions._default.grabright.AddOnStateUpListener(GrabRightUp, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.grableft.AddOnUpdateListener(Run, SteamVR_Input_Sources.Any);
             //SteamVR_Actions._default.grableft.AddOnStateUpListener(GrabLeftUp, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.confirm.AddOnStateUpListener(Confirm, SteamVR_Input_Sources.Any); 
+            SteamVR_Actions._default.confirm.AddOnStateDownListener(Confirm, SteamVR_Input_Sources.Any); 
             SteamVR_Actions._default.recenter.AddOnChangeListener(Recenter, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.actionbar.AddOnStateUpListener(ActionBar, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.decline.AddOnStateUpListener(Decline, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.actionbar.AddOnStateDownListener(ActionBar, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.decline.AddOnStateDownListener(Decline, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.throwitem.AddOnChangeListener(throwItem, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.pause.AddOnStateUpListener(Pause, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.jump.AddOnStateUpListener(Jump, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.crouch.AddOnStateUpListener(Crouch, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.pause.AddOnStateDownListener(Pause, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.jump.AddOnStateDownListener(Jump, SteamVR_Input_Sources.Any);
+            SteamVR_Actions._default.crouch.AddOnStateDownListener(Crouch, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.SwapTurnLeft.AddOnUpdateListener(SwapTurnLeft, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.SwapTurnRight.AddOnUpdateListener(SwapTurnRight, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.highlight.AddOnStateDownListener(Map, SteamVR_Input_Sources.Any);
@@ -107,7 +107,7 @@ namespace SignOfSilenceVR
             InputSystem.SimulateButton(InputKeys.Jump);
         }
 
-        public static void Pause(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        public static void ActionBar(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
             InputSystem.SimulateButton(InputKeys.OpenCloseInventory);
         }
@@ -117,7 +117,7 @@ namespace SignOfSilenceVR
             //VRHands.SpawnHands();
         }
 
-        public static void ActionBar(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        public static void Pause(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
             InputSystem.SimulateButton(InputKeys.OpenMenu);
         }

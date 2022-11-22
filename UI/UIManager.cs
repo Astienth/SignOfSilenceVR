@@ -16,6 +16,9 @@ namespace SignOfSilenceVR
                 "com.sinai.unityexplorer.MouseInspector_Root"
         };
         private static GameObject canvasBlur = null;
+        public static Vector3 standingUI = new Vector3(0, 1.6f, 1);
+        public static Vector3 crouchingUI = new Vector3(0, 0.7f, 1);
+        public static Vector3 crouchmovingUI = new Vector3(0, 0.9f, 1.2f);
 
         private void Awake()
         {
@@ -58,11 +61,12 @@ namespace SignOfSilenceVR
                 {
                     var target = new GameObject("PlayerHeadUI");
                     target.transform.parent = CameraManager.LocalPlayer.transform;
-                    target.transform.localPosition = new Vector3(0, 1, 1);
+                    target.transform.localPosition = standingUI;
                     target.transform.rotation = Quaternion.identity;
                     //canvas.worldCamera = Camera.main;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.updateCrouch = true;
+                    ui.speedTransform = CameraManager.speedTransform;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
                     fixPlayerUI();
@@ -78,7 +82,7 @@ namespace SignOfSilenceVR
                 {
                     var target = new GameObject("LoadingScreenUI");
                     target.transform.parent = Camera.main.transform;
-                    target.transform.localPosition = new Vector3(0, 1, 2);
+                    target.transform.localPosition = standingUI;
                     target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.SetTargetTransform(target.transform);
