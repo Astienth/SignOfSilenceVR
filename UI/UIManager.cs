@@ -15,6 +15,7 @@ namespace SignOfSilenceVR
                 "com.sinai.universelib.resizeCursor_Root",
                 "com.sinai.unityexplorer.MouseInspector_Root"
         };
+        private static GameObject canvasBlur = null;
 
         private void Awake()
         {
@@ -24,6 +25,14 @@ namespace SignOfSilenceVR
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             initMainCanvas();
+        }
+
+        private void LateUpdate()
+        {
+            if (canvasBlur)
+            {
+                canvasBlur.SetActive(false);
+            }
         }
 
         public void initMainCanvas()
@@ -49,13 +58,14 @@ namespace SignOfSilenceVR
                 {
                     var target = new GameObject("PlayerHeadUI");
                     target.transform.parent = CameraManager.LocalPlayer.transform;
-                    target.transform.localPosition = new Vector3(0, 2, 1);
-                    //target.transform.rotation = Quaternion.identity;
+                    target.transform.localPosition = new Vector3(0, 1, 1);
+                    target.transform.rotation = Quaternion.identity;
+                    //canvas.worldCamera = Camera.main;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.updateCrouch = true;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
-                    fixPlayerUI(canvas);
+                    fixPlayerUI();
                     patchedCanvases.Add(canvas.name);
                 }
             }
@@ -69,7 +79,7 @@ namespace SignOfSilenceVR
                     var target = new GameObject("LoadingScreenUI");
                     target.transform.parent = Camera.main.transform;
                     target.transform.localPosition = new Vector3(0, 1, 2);
-                    //target.transform.rotation = Quaternion.identity;
+                    target.transform.rotation = Quaternion.identity;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
@@ -78,9 +88,25 @@ namespace SignOfSilenceVR
             }
         }
 
-        public void fixPlayerUI(Canvas canvas)
+        public void fixPlayerUI()
         {
-            
+            canvasBlur = GameObject.Find("PlayerUI/CanvasBlur/Blur").gameObject;
+
+            /*
+            //UI camera
+            var target = new GameObject("UICam");
+            target.layer = LayerMask.NameToLayer("UI");
+            Camera UICam = target.AddComponent<Camera>();
+            UICam.name = "UICam";
+            UICam.clearFlags = CameraClearFlags.Depth;
+            UICam.targetDisplay = 0;
+            UICam.cullingMask = LayerMask.GetMask("UI");
+            UICam.depth = 10;
+            target.transform.parent = CameraManager.playerCamera.transform;
+            target.transform.localPosition = Vector3.zero;
+            target.transform.rotation = Quaternion.identity;
+            CameraManager.playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+            */
         }
 
         private static bool IsCanvasToIgnore(string canvasName)

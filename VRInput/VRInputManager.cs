@@ -119,7 +119,7 @@ namespace SignOfSilenceVR
 
         public static void ActionBar(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-
+            InputSystem.SimulateButton(InputKeys.OpenMenu);
         }
 
         public static void Crouch(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)

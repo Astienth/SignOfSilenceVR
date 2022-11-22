@@ -7,17 +7,15 @@ namespace SignOfSilenceVR
 {
     public class UIPatches
     {
-        /*
         [HarmonyPatch]
-        class CharacterMoving
+        class DepthOfField
         {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(PlayerMovementController), "OnMovementInputHandler")]
-            public static void Postfix(Vector3 movement)
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(DofController), "Update")]
+            public static bool Prefix()
             {
-                isMoving = movement.sqrMagnitude > 0;
+                return false;
             }
         }
-        */
     }
 }

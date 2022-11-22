@@ -19,6 +19,7 @@ namespace SignOfSilenceVR
             m_canvas = gameObject.GetComponent<Canvas>();
             if (m_scale > 0) m_canvas.transform.localScale = Vector3.one * m_scale;
             m_canvas.renderMode = RenderMode.WorldSpace;
+            //m_canvas.worldCamera = (CameraManager.playerCamera)?? Camera.main;
         }
 
         private void Start()
