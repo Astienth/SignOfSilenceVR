@@ -66,7 +66,7 @@ public class VrLaser : MonoBehaviour
                 : Vector3.forward * laserLength);
     }
 
-    public void UpdateLaserVisibility(bool enabled, GameObject target)
+    public void UpdateLaserVisibility(bool enabled)
     {
         if(!enabled)
         {

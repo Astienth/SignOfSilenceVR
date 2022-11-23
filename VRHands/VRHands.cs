@@ -81,6 +81,7 @@ namespace SignOfSilenceVR
                     spotlight.parent = RightHand.transform;
                     spotlight.localPosition = Vector3.zero;
                     spotlight.eulerAngles = new Vector3(35, 0, 0);
+                    //spotlight.GetComponent<Light>().cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
 
                     //Head controls and raycast
                     var raycaster = CameraManager.cameraParent.Find("Head")

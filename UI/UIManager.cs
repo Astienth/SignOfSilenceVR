@@ -69,7 +69,7 @@ namespace SignOfSilenceVR
                     ui.speedTransform = CameraManager.speedTransform + 6;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
-                    fixPlayerUI();
+                    fixPlayerUI(canvas);
                     patchedCanvases.Add(canvas.name);
                 }
             }
@@ -92,7 +92,7 @@ namespace SignOfSilenceVR
             }
         }
 
-        public void fixPlayerUI()
+        public void fixPlayerUI(Canvas canvas)
         {
             //getting the blurring component 
             canvasBlur = GameObject.Find("PlayerUI/CanvasBlur/Blur").gameObject;

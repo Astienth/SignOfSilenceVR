@@ -77,7 +77,7 @@ public class LaserInputModule : BaseInputModule
         {
             vrLaser.SetTarget(null);
         }
-        vrLaser.UpdateLaserVisibility(isHit, (isHit)? hit.transform.gameObject : null);
+        vrLaser.UpdateLaserVisibility(isHit);
 
         var pointerPosition = EventCamera.WorldToScreenPoint(hit.point);
 
