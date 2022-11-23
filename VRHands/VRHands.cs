@@ -81,6 +81,14 @@ namespace SignOfSilenceVR
                     spotlight.parent = RightHand.transform;
                     spotlight.localPosition = Vector3.zero;
                     spotlight.eulerAngles = new Vector3(35, 0, 0);
+
+                    //Head controls and raycast
+                    var raycaster = CameraManager.cameraParent.Find("Head")
+                        .transform.Find("RaycasterAndControls").transform;
+                    raycaster.parent = RightHand.transform;
+                    raycaster.localPosition = Vector3.zero;
+                    raycaster.eulerAngles = new Vector3(35, 0, 0);
+
                     //ALL OTHER ITEMS
                     /*
                     var items = CameraManager.cameraParent.parent.transform.Find("ITEMS").transform;

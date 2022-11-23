@@ -96,8 +96,9 @@ namespace SignOfSilenceVR
                 cameraParent.rotation = LocalPlayer.transform.rotation;
                 cameraParent.localRotation = Quaternion.identity;
                 playerCamera.transform.parent = cameraParent;
+                playerCamera.nearClipPlane = 0.04f;
+                playerCamera.farClipPlane = 1000f;
                 resetPlayerHeadPosition();
-                //hide head
                 hideHead();
             }
             else
@@ -130,11 +131,13 @@ namespace SignOfSilenceVR
             {
                 headBone.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             }
+            /*
             var neck = getHeadBone(HumanBodyBones.Neck);
             if (neck != null)
             {
                 neck.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             }
+            */
         }
 
         public static Transform getHeadBone(HumanBodyBones id = HumanBodyBones.Head)
