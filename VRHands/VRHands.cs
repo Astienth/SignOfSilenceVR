@@ -75,11 +75,18 @@ namespace SignOfSilenceVR
                 {
                     //CameraManager.cameraParent.Find("Head")
                     //  .transform.Find("LightsItemInHand").transform.parent = RightHand.transform;
+                    //DEFAULT LIGHT
                     var spotlight = CameraManager.cameraParent.Find("Head")
                         .transform.Find("Spotlight").transform;
                     spotlight.parent = RightHand.transform;
                     spotlight.localPosition = Vector3.zero;
                     spotlight.eulerAngles = new Vector3(35, 0, 0);
+                    //ALL OTHER ITEMS
+                    /*
+                    var items = CameraManager.cameraParent.parent.transform.Find("ITEMS").transform;
+                    items.parent = RightHand.transform;
+                    items.localPosition = Vector3.zero;
+                    */
                 }
             }
         }

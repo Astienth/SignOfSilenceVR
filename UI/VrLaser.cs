@@ -73,25 +73,6 @@ public class VrLaser : MonoBehaviour
             lineRenderer.enabled = false;
             return;
         }
-        /*
-        if(target && target.transform.Find("Hearts"))
-        {
-            Logs.WriteWarning("TARGET NAME "+target.name);
-            Logs.WriteWarning("HEARTS FOUND");
-            if (ElementUIHelper.IsFullyVisibleFrom(
-                target.transform.Find("Hearts").GetComponent<RectTransform>(),
-                VRHands.getCamera().GetComponent<Camera>()))
-            {
-
-                Logs.WriteWarning("HEARTS IN VIEW");
-                lineRenderer.enabled = false;
-                return;
-            }
-            Logs.WriteWarning("HEARTS HIDDEN");
-            lineRenderer.enabled = true;
-            return;
-        }
-        */
         lineRenderer.enabled = true;
     }
 

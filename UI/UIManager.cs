@@ -66,7 +66,7 @@ namespace SignOfSilenceVR
                     //canvas.worldCamera = Camera.main;
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.updateCrouch = true;
-                    ui.speedTransform = CameraManager.speedTransform;
+                    ui.speedTransform = CameraManager.speedTransform + 6;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
                     fixPlayerUI();
@@ -94,7 +94,16 @@ namespace SignOfSilenceVR
 
         public void fixPlayerUI()
         {
+            //getting the blurring component 
             canvasBlur = GameObject.Find("PlayerUI/CanvasBlur/Blur").gameObject;
+            //moving hearts and sound and bottom UI
+            var hearts = GameObject.Find("PlayerUI/CanvasMain/Hearts");
+            hearts.transform.localPosition += new Vector3(0,-150f,-500f);
+            var noise = GameObject.Find("PlayerUI/CanvasMain/Noise");
+            noise.transform.localPosition += new Vector3(520f, -150f, -500f); 
+            var RightBottomPanel = GameObject.Find("PlayerUI/CanvasMain/RightBottomPanel");
+            RightBottomPanel.transform.localPosition += new Vector3(-520f, -150f, -500f);
+            GameObject.Find("PlayerUI/CanvasMain/Sight").gameObject.SetActive(false);
 
             /*
             //UI camera

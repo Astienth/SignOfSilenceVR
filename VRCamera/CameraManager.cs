@@ -130,9 +130,14 @@ namespace SignOfSilenceVR
             {
                 headBone.localScale = new Vector3(0.001f, 0.001f, 0.001f);
             }
+            var neck = getHeadBone(HumanBodyBones.Neck);
+            if (neck != null)
+            {
+                neck.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            }
         }
 
-        public static Transform getHeadBone()
+        public static Transform getHeadBone(HumanBodyBones id = HumanBodyBones.Head)
         {
             if (LocalPlayer == null)
             {
@@ -143,7 +148,7 @@ namespace SignOfSilenceVR
             {
                 return null;
             }
-            return animator.GetBoneTransform(HumanBodyBones.Head);
+            return animator.GetBoneTransform(id);
         }
 
         private Camera findOriginCamera()

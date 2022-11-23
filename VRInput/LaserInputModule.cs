@@ -45,7 +45,6 @@ public class LaserInputModule : BaseInputModule
     {
         if (!EventCamera)
         {
-            //Logs.WriteInfo("RETURNING");
             return;
         }
 
