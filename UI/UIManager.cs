@@ -103,6 +103,9 @@ namespace SignOfSilenceVR
         {
             //getting the blurring component 
             canvasBlur = GameObject.Find("PlayerUI/CanvasBlur/Blur").gameObject;
+            canvas.gameObject.layer = LayerMask.NameToLayer("UI");
+            GameObject.Find("PlayerUI").gameObject.layer = LayerMask.NameToLayer("UI");
+            GameObject.Find("PlayerUI/CanvasBlur").gameObject.layer = LayerMask.NameToLayer("UI");
             //moving hearts and sound and bottom UI
             var hearts = GameObject.Find("PlayerUI/CanvasMain/Hearts");
             hearts.transform.localPosition += new Vector3(0,-150f,-500f);
@@ -120,6 +123,8 @@ namespace SignOfSilenceVR
                 if (layer == "UI")
                 {
                     Physics.IgnoreLayerCollision(LayerMask.NameToLayer("UI")
+                        , LayerMask.NameToLayer(layer));
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("UI")
                         , LayerMask.NameToLayer(layer));
                 }
             }
