@@ -60,19 +60,7 @@ namespace SignOfSilenceVR
                 return false;
             }
         }
-        /*
-        [HarmonyPatch]
-        class DistanceLog
-        {
-            [HarmonyPostfix]
-            [HarmonyPatch(typeof(FlashlightController), "AdaptiveIntensity")]
-            public static void Postfix(FlashlightController __instance, float distance)
-            {
-                Logs.WriteWarning("FLASH LIGHT DISTANCE " + distance.ToString());
-            }
-        }
-        */
-                
+        
         [HarmonyPatch]
         class DistantRaycasterFIx
         {
