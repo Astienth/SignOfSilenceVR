@@ -37,7 +37,7 @@ namespace SignOfSilenceVR
                 return;
             }
             UpdateTransform();
-            if (updateCrouch) updateCrouched();
+            if (updateCrouch) updateCrouched();            
         }
 
         public void SetScale(float scale)

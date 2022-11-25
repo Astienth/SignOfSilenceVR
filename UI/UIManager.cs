@@ -35,6 +35,11 @@ namespace SignOfSilenceVR
             if (canvasBlur)
             {
                 canvasBlur.SetActive(false);
+                var sight = GameObject.Find("PlayerUI/CanvasMain/Sight");
+                if (sight)
+                {
+                    sight.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -104,7 +109,6 @@ namespace SignOfSilenceVR
             var RightBottomPanel = GameObject.Find("PlayerUI/CanvasMain/RightBottomPanel");
             RightBottomPanel.transform.localPosition += new Vector3(-520f, -150f, -500f);
             GameObject.Find("PlayerUI/CanvasMain/Sight").gameObject.SetActive(false);
-
             /*
             //UI camera
             var target = new GameObject("UICam");
@@ -116,6 +120,7 @@ namespace SignOfSilenceVR
             UICam.cullingMask = LayerMask.GetMask("UI");
             UICam.depth = 10;
             target.transform.parent = CameraManager.playerCamera.transform;
+            target.transform.position = Vector3.zero;
             target.transform.localPosition = Vector3.zero;
             target.transform.rotation = Quaternion.identity;
             CameraManager.playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
