@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -65,6 +66,7 @@ namespace SignOfSilenceVR
                 if (canvas && !patchedCanvases.Contains(canvas.name) )
                 {
                     var target = new GameObject("PlayerHeadUI");
+                    target.layer = LayerMask.NameToLayer("UI");
                     target.transform.parent = CameraManager.LocalPlayer.transform;
                     target.transform.localPosition = standingUI;
                     target.transform.rotation = Quaternion.identity;
@@ -109,6 +111,19 @@ namespace SignOfSilenceVR
             var RightBottomPanel = GameObject.Find("PlayerUI/CanvasMain/RightBottomPanel");
             RightBottomPanel.transform.localPosition += new Vector3(-520f, -150f, -500f);
             GameObject.Find("PlayerUI/CanvasMain/Sight").gameObject.SetActive(false);
+
+            //ignore collisions with ui layer
+            string[] layers = Enumerable.Range(0, 32).Select(index => LayerMask.LayerToName(index))
+                .Where(l => !string.IsNullOrEmpty(l)).ToArray();
+            foreach (string layer in layers)
+            {
+                if (layer == "UI")
+                {
+                    Physics.IgnoreLayerCollision(LayerMask.NameToLayer("UI")
+                        , LayerMask.NameToLayer(layer));
+                }
+            }
+
             /*
             //UI camera
             var target = new GameObject("UICam");
