@@ -53,6 +53,7 @@ namespace SignOfSilenceVR
                 var target = new GameObject("TitleScreen");
                 target.transform.position = new Vector3(902.6f, 64.4f, 230.2f);
                 target.transform.rotation = Quaternion.Euler(0, 58f, 0);
+                canvas.gameObject.AddComponent<GraphicRaycaster>();
                 var ui = canvas.gameObject.AddComponent<AttachedUi>();
                 ui.speedTransform = 50;
                 ui.SetTargetTransform(target.transform);
@@ -71,6 +72,7 @@ namespace SignOfSilenceVR
                     target.transform.localPosition = standingUI;
                     target.transform.rotation = Quaternion.identity;
                     //canvas.worldCamera = Camera.main;
+                    canvas.gameObject.AddComponent<GraphicRaycaster>();
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.updateCrouch = true;
                     ui.speedTransform = CameraManager.speedTransform + 6;

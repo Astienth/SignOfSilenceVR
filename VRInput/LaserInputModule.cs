@@ -38,7 +38,11 @@ public class LaserInputModule : BaseInputModule
 
     private void Update()
     {
+        //make sure physycs respond to isTrigger canvases
+        Physics.queriesHitTriggers = true;
         Process();
+        //make sure physycs DONT respond to isTrigger canvases
+        Physics.queriesHitTriggers = false;
     }
 
     public override void Process()
