@@ -19,7 +19,7 @@ namespace SignOfSilenceVR
             
             if (getCamera() && vrLaser.inputModule.EventCamera == null)
             {
-                vrLaser.SetUp(Camera.main);
+                vrLaser.SetUp(getCamera().gameObject.GetComponentInChildren<Camera>());
             }
         }
 

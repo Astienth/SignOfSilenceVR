@@ -110,11 +110,11 @@ namespace SignOfSilenceVR
             GameObject.Find("PlayerUI/CanvasBlur").gameObject.layer = LayerMask.NameToLayer("UI");
             //moving hearts and sound and bottom UI
             var hearts = GameObject.Find("PlayerUI/CanvasMain/Hearts");
-            hearts.transform.localPosition += new Vector3(0,-150f,-500f);
+            hearts.transform.localPosition += new Vector3(0,-100f,-450f);
             var noise = GameObject.Find("PlayerUI/CanvasMain/Noise");
-            noise.transform.localPosition += new Vector3(520f, -150f, -500f); 
+            noise.transform.localPosition += new Vector3(520f, -100f, -450f); 
             var RightBottomPanel = GameObject.Find("PlayerUI/CanvasMain/RightBottomPanel");
-            RightBottomPanel.transform.localPosition += new Vector3(-520f, -150f, -500f);
+            RightBottomPanel.transform.localPosition += new Vector3(-520f, -100f, -450f);
             GameObject.Find("PlayerUI/CanvasMain/Sight").gameObject.SetActive(false);
 
             //ignore collisions with ui layer

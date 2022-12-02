@@ -144,6 +144,9 @@ public class LaserInputModule : BaseInputModule
     {
         var go = pointerData.pointerCurrentRaycast.gameObject;
 
+        if(go != null)
+            Logs.WriteWarning("GAMEOBJECT " +go.name);
+        
         // Send pointer down event.
         pointerData.pressPosition = pointerData.position;
         pointerData.pointerPressRaycast = pointerData.pointerCurrentRaycast;

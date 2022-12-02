@@ -30,6 +30,7 @@ public class VrLaser : MonoBehaviour
     public void SetUp(Camera camera)
     {
         inputModule.EventCamera = camera;
+        inputModule.EventCamera.eventMask = ~(1 << LayerMask.NameToLayer("UI"));
     }
 
     private void Start()
