@@ -29,6 +29,7 @@ public class VrLaser : MonoBehaviour
 
     public void SetUp(Camera camera)
     {
+        inputModule = LaserInputModule.Create(this);
         inputModule.EventCamera = camera;
         inputModule.EventCamera.eventMask = ~(1 << LayerMask.NameToLayer("UI"));
     }
@@ -45,8 +46,6 @@ public class VrLaser : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
         lineRenderer.sortingOrder = 10000;
         lineRenderer.enabled = false;
-
-        inputModule = LaserInputModule.Create(this);
     }
 
     private void Update()
@@ -67,14 +66,17 @@ public class VrLaser : MonoBehaviour
                 : Vector3.forward * laserLength);
     }
 
-    public void UpdateLaserVisibility(bool enabled)
+    public void UpdateLaserVisibility(bool isHit)
     {
-        if(!enabled)
+        //if ingame player view, check for canvasUI menu opened
+        if (isHit && CameraManager.playerCamera && CameraManager.LocalPlayer != null)
+        {
+            lineRenderer.enabled = UIManager.isPointerActive();
+        }
+        else
         {
             lineRenderer.enabled = false;
-            return;
         }
-        lineRenderer.enabled = true;
     }
 
     public bool ClickDown()
