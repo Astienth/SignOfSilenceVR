@@ -1,6 +1,8 @@
 ﻿using System;
+using Donteco;
 using HarmonyLib;
 using UnityEngine;
+using Valve.VR;
 
 namespace SignOfSilenceVR
 {
@@ -28,6 +30,7 @@ namespace SignOfSilenceVR
                 return false;
             }
         }
+
         [HarmonyPatch]
         class GamepadInput
         {
@@ -52,6 +55,24 @@ namespace SignOfSilenceVR
                     movement = new Vector3(VRInputManager.axisMove.x, 0.0f, VRInputManager.axisMove.y);
                     VRInputManager.axisMove = Vector2.zero;
                 }
+            }
+        }
+
+        [HarmonyPatch]
+        class GetKeyDownCommonInput
+        {
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(Donteco.CommonInput), "GetKeyDown")]
+            public static bool PreFix(ref bool __result, InputKeys input)
+            {
+                if (input == InputKeys.Action
+                    && SteamVR_Actions._default.confirm.GetStateDown(SteamVR_Input_Sources.RightHand))
+                {
+                    __result = true;
+                    return false;
+                }
+
+                return __result;
             }
         }
     }

@@ -30,7 +30,7 @@ namespace SignOfSilenceVR
             SteamVR_Actions._default.actionbar.AddOnStateDownListener(ActionBar, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.decline.AddOnStateDownListener(Decline, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.throwitem.AddOnChangeListener(throwItem, SteamVR_Input_Sources.Any);
-            SteamVR_Actions._default.pause.AddOnStateDownListener(Pause, SteamVR_Input_Sources.Any);
+            //SteamVR_Actions._default.pause.AddOnStateDownListener(Pause, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.jump.AddOnStateDownListener(Jump, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.crouch.AddOnStateDownListener(Crouch, SteamVR_Input_Sources.Any);
             SteamVR_Actions._default.SwapTurnLeft.AddOnUpdateListener(SwapTurnLeft, SteamVR_Input_Sources.Any);
@@ -114,7 +114,7 @@ namespace SignOfSilenceVR
 
         public static void Decline(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
         {
-            //VRHands.SpawnHands();
+            InputSystem.SimulateButton(InputKeys.OpenMenu);
         }
 
         public static void Pause(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
