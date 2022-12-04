@@ -21,6 +21,7 @@ namespace SignOfSilenceVR
         public static Vector3 crouchingUI = new Vector3(0, 0.7f, 1);
         public static Vector3 crouchmovingUI = new Vector3(0, 0.9f, 1.2f);
         public static Canvas currentCanvas;
+        public static bool diedOnce = false;
 
         private void Awake()
         {
@@ -31,6 +32,7 @@ namespace SignOfSilenceVR
         {
             patchedCanvases.Clear();
             currentCanvas = null;
+            diedOnce = false;
             initMainCanvas();
         }
 
@@ -45,6 +47,7 @@ namespace SignOfSilenceVR
                     sight.gameObject.SetActive(false);
                 }
             }
+            checkForStatistics();
         }
 
         public void initMainCanvas()
@@ -94,7 +97,8 @@ namespace SignOfSilenceVR
                 if (canvas && !patchedCanvases.Contains(canvas.name))
                 {
                     var target = new GameObject("LoadingScreenUI");
-                    target.transform.position = new Vector3(902.6f, 64.4f, 230.2f);
+                    var camLoading = GameObject.Find("LoadingScreen/View/CameraForLoadingScreen").transform;
+                    target.transform.position = camLoading.position + new Vector3(0, 1, 1.5f);
                     target.transform.rotation = Quaternion.Euler(0, 0, 0);
                     var ui = canvas.gameObject.AddComponent<AttachedUi>();
                     ui.speedTransform = 50;
@@ -105,13 +109,33 @@ namespace SignOfSilenceVR
             }
         }
 
+        public void checkForStatistics()
+        {
+            if(!diedOnce && currentCanvas && currentCanvas.transform.Find("GameStatistics/fade")
+                .gameObject.activeSelf)
+            {
+                var cam = GameObject.Find("Quest_EverybodyDead/EndGameCamera/Camera");
+                if (cam)
+                {
+                    currentCanvas.GetComponent<AttachedUi>().updateCrouch = false;
+                    var target = GameObject.Find("PlayerHeadUI");
+                    target.transform.parent = null;
+                    target.transform.position = cam.transform.position + new Vector3(-1.4f, 0, -0.8f);
+                    target.transform.rotation = Quaternion.Euler(0, 220, 0);
+                    VRHands.RightHand.transform.parent = cam.transform;
+                    diedOnce = true;
+                }
+            }
+        }
+
         public static bool isPointerActive()
         {
             if(currentCanvas != null)
             {
                 if(currentCanvas.transform.Find("Menu/area").gameObject.activeSelf
                     || currentCanvas.transform.Find("Prologue").gameObject.activeSelf
-                    || currentCanvas.transform.Find("Inventory").gameObject.activeSelf)
+                    || currentCanvas.transform.Find("Inventory").gameObject.activeSelf
+                    || currentCanvas.transform.Find("GameStatistics/fade").gameObject.activeSelf)
                 {
                     return true;
                 }

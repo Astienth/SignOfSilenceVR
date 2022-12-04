@@ -75,7 +75,7 @@ public class VrLaser : MonoBehaviour
         }
         else
         {
-            lineRenderer.enabled = false;
+            lineRenderer.enabled = isHit;
         }
     }
 

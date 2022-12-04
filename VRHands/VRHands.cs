@@ -90,8 +90,17 @@ namespace SignOfSilenceVR
                     raycaster.localPosition = Vector3.zero;
                     raycaster.eulerAngles = new Vector3(35, 0, 0);
 
-                    //ALL OTHER ITEMS
                     /*
+                    //Right model hand
+                    var righHandModel = CameraManager.cameraParent.parent.transform.Find("MODEL_ROOT").transform
+                        .GetChild(0).transform.Find("Right_arm").transform;
+                    righHandModel.parent = RightHand.transform;
+                    righHandModel.localPosition = Vector3.zero;
+                    var righHand = CameraManager.cameraParent.parent.transform.Find("HEAD_HANDS/right").transform;
+                    righHand.parent = RightHand.transform;
+                    righHand.localPosition = Vector3.zero;
+
+                    //ALL OTHER ITEMS
                     var items = CameraManager.cameraParent.parent.transform.Find("ITEMS").transform;
                     items.parent = RightHand.transform;
                     items.localPosition = Vector3.zero;
