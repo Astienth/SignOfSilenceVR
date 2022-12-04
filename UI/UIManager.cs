@@ -134,7 +134,6 @@ namespace SignOfSilenceVR
                     var rigContainer = new GameObject("RigContainer");
                     rigContainer.transform.position = cam.transform.position;
                     rigContainer.transform.rotation = cam.transform.rotation;
-                    rigContainer.transform.rotation *= Quaternion.Euler(0, 0, 25);
                     cam.transform.parent = rigContainer.transform;
                     VRHands.RightHand.transform.parent = rigContainer.transform;
                     cam.GetComponent<Camera>().eventMask = ~(1 << LayerMask.NameToLayer("UI"));
