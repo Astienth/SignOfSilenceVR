@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 831248407
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1140a6cad70591840ec297a30d7ce10a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: fbae6ed0f58f12ddb037f8a4e0b12366
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5890e3cad70bea64d91aef9145ba3454, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Prefabs/HandRight.prefab
+- Assets/Prefabs/HandLeft.prefab
+Dependencies: []
