@@ -123,6 +123,7 @@ namespace SignOfSilenceVR
                     target.transform.position = cam.transform.position + new Vector3(-1.4f, 0, -0.8f);
                     target.transform.rotation = Quaternion.Euler(0, 220, 0);
                     VRHands.RightHand.transform.parent = cam.transform;
+                    cam.GetComponent<Camera>().eventMask = ~(1 << LayerMask.NameToLayer("UI"));
                     diedOnce = true;
                 }
             }
