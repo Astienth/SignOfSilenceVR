@@ -26,14 +26,19 @@ namespace SignOfSilenceVR
         private void Awake()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnUnloadScene;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            initMainCanvas(scene);
+        }
+
+        private void OnUnloadScene(Scene scene)
+        {
             patchedCanvases.Clear();
             currentCanvas = null;
             diedOnce = false;
-            initMainCanvas();
         }
 
         private void LateUpdate()
@@ -50,27 +55,30 @@ namespace SignOfSilenceVR
             checkForStatistics();
         }
 
-        public void initMainCanvas()
+        public void initMainCanvas(Scene scene)
         {
             //title screen
-            if (SceneManager.GetActiveScene().name == "menu")
+            if (scene.name == "menu")
             {
                 var canvas = GameObject.Find("UI/Canvas")?.GetComponent<Canvas>();
-                var target = new GameObject("TitleScreen");
-                target.transform.position = new Vector3(902.6f, 64.4f, 230.2f);
-                target.transform.rotation = Quaternion.Euler(0, 58f, 0);
-                canvas.gameObject.AddComponent<GraphicRaycaster>();
-                var ui = canvas.gameObject.AddComponent<AttachedUi>();
-                ui.speedTransform = 50;
-                ui.SetTargetTransform(target.transform);
-                ui.SetScale(0.0015f);
-                patchedCanvases.Add(canvas.name);
+                if (canvas && !patchedCanvases.Contains("TitleScreen"))
+                {
+                    var target = new GameObject("TitleScreen");
+                    target.transform.position = new Vector3(902.6f, 64.4f, 230.2f);
+                    target.transform.rotation = Quaternion.Euler(0, 58f, 0);
+                    canvas.gameObject.AddComponent<GraphicRaycaster>();
+                    var ui = canvas.gameObject.AddComponent<AttachedUi>();
+                    ui.speedTransform = 50;
+                    ui.SetTargetTransform(target.transform);
+                    ui.SetScale(0.0015f);
+                    patchedCanvases.Add("TitleScreen");
+                }
             }
             //Player UI
             if (CameraManager.playerCamera && CameraManager.LocalPlayer != null)
             {
                 var canvas = GameObject.Find("PlayerUI/CanvasMain")?.GetComponent<Canvas>();
-                if (canvas && !patchedCanvases.Contains(canvas.name) )
+                if (canvas && !patchedCanvases.Contains("PlayerHeadUI") )
                 {
                     currentCanvas = canvas;
                     var target = new GameObject("PlayerHeadUI");
@@ -86,7 +94,7 @@ namespace SignOfSilenceVR
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
                     fixPlayerUI(canvas);
-                    patchedCanvases.Add(canvas.name);
+                    patchedCanvases.Add("PlayerHeadUI");
                 }
             }
             
@@ -94,7 +102,7 @@ namespace SignOfSilenceVR
             if (Camera.main)
             {
                 var canvas = GameObject.Find("LoadingScreen/View/Canvas")?.GetComponent<Canvas>();
-                if (canvas && !patchedCanvases.Contains(canvas.name))
+                if (canvas && !patchedCanvases.Contains("LoadingScreenUI"))
                 {
                     var target = new GameObject("LoadingScreenUI");
                     var camLoading = GameObject.Find("LoadingScreen/View/CameraForLoadingScreen").transform;
@@ -104,7 +112,7 @@ namespace SignOfSilenceVR
                     ui.speedTransform = 50;
                     ui.SetTargetTransform(target.transform);
                     ui.SetScale(0.0015f);
-                    patchedCanvases.Add(canvas.name);
+                    patchedCanvases.Add("LoadingScreenUI");
                 }
             }
         }
@@ -122,6 +130,7 @@ namespace SignOfSilenceVR
                     target.transform.parent = null;
                     target.transform.position = cam.transform.position + new Vector3(-1.4f, 0, -0.8f);
                     target.transform.rotation = Quaternion.Euler(0, 220, 0);
+                    // TODO add container for camera and hands
                     VRHands.RightHand.transform.parent = cam.transform;
                     cam.GetComponent<Camera>().eventMask = ~(1 << LayerMask.NameToLayer("UI"));
                     diedOnce = true;
