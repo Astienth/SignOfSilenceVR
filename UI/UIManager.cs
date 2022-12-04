@@ -128,10 +128,14 @@ namespace SignOfSilenceVR
                     currentCanvas.GetComponent<AttachedUi>().updateCrouch = false;
                     var target = GameObject.Find("PlayerHeadUI");
                     target.transform.parent = null;
-                    target.transform.position = cam.transform.position + new Vector3(-1.4f, 0, -0.8f);
+                    target.transform.position = cam.transform.position + new Vector3(-0.8f, 0.5f, -0.8f);
                     target.transform.rotation = Quaternion.Euler(0, 220, 0);
-                    // TODO add container for camera and hands
-                    VRHands.RightHand.transform.parent = cam.transform;
+
+                    var rigContainer = new GameObject("RigContainer");
+                    rigContainer.transform.position = cam.transform.position;
+                    rigContainer.transform.rotation = cam.transform.rotation;
+                    cam.transform.parent = rigContainer.transform;
+                    VRHands.RightHand.transform.parent = rigContainer.transform;
                     cam.GetComponent<Camera>().eventMask = ~(1 << LayerMask.NameToLayer("UI"));
                     diedOnce = true;
                 }
