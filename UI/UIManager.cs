@@ -22,6 +22,7 @@ namespace SignOfSilenceVR
         public static Vector3 crouchmovingUI = new Vector3(0, 0.9f, 1.2f);
         public static Canvas currentCanvas;
         public static bool diedOnce = false;
+        public static int countRetries = 0;
 
         private void Awake()
         {
@@ -39,10 +40,18 @@ namespace SignOfSilenceVR
             patchedCanvases.Clear();
             currentCanvas = null;
             diedOnce = false;
+            countRetries = 0;
         }
 
         private void LateUpdate()
         {
+            //retry if canvas worldspace failed
+            if (countRetries < 10)
+            {
+                initMainCanvas(SceneManager.GetActiveScene());
+                countRetries++;
+            }
+
             if (canvasBlur)
             {
                 canvasBlur.SetActive(false);
@@ -55,7 +64,7 @@ namespace SignOfSilenceVR
             checkForStatistics();
         }
 
-        public void initMainCanvas(Scene scene)
+        public static void initMainCanvas(Scene scene)
         {
             //title screen
             if (scene.name == "menu")
@@ -158,7 +167,7 @@ namespace SignOfSilenceVR
             return true;
         }
 
-        public void fixPlayerUI(Canvas canvas)
+        public static void fixPlayerUI(Canvas canvas)
         {
             //getting the blurring component 
             canvasBlur = GameObject.Find("PlayerUI/CanvasBlur/Blur").gameObject;

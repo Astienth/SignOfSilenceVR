@@ -2,6 +2,7 @@
 using UnityEngine;
 using Donteco;
 using HarmonyLib;
+using UnityEngine.SceneManagement;
 
 namespace SignOfSilenceVR
 {
@@ -17,6 +18,19 @@ namespace SignOfSilenceVR
                 return false;
             }
         }
+
+        /*
+        [HarmonyPatch]
+        class CanvasInit
+        {
+            [HarmonyPostfix]
+            [HarmonyPatch(typeof(Canvas), "OnEnable")]
+            public static void Postfix()
+            {
+                UIManager.initMainCanvas(SceneManager.GetActiveScene());
+            }
+        }
+        */
 
         [HarmonyPatch]
         class RaycasterFIx
